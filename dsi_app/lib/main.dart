@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         initialRoute: LoginPage.routeName,
         routes: {
           LoginPage.routeName: (context) => const LoginPage(),
-          Registration.routeName: (context) => const Registration(),
+          Registration.routeName: (context) => Registration(),
           EnterPage.routeName: (context) => const EnterPage(),
           Forgotpassword.routeName: (context) => const Forgotpassword(),
         });

@@ -1,6 +1,6 @@
 import 'package:dsi_app/src/shared/AppColors.dart';
 import 'package:flutter/material.dart';
-import 'package:dsi_app/src/shared/CustomText.dart';
+import 'package:dsi_app/src/alth/components/custom_text_field.dart';
 import 'package:dsi_app/src/Controller/TextFieldController.dart';
 
 class LoginPage extends StatefulWidget {
@@ -29,31 +29,26 @@ class _LoginPageState extends State<LoginPage> {
             child: Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: 52,
-                vertical: 70,
+                vertical: 40,
               ),
               decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius:
                       BorderRadius.vertical(top: Radius.circular(45))),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       //Email
-                      CustomTextField(
-                        icon: Icons.email,
-                        label: 'Email',
-                        isObscure: false,
-                        controller: textFieldController.emailController,
-                      ),
-                      //Senha
-                      CustomTextField(
+                      const CustomTextField(icon: Icons.email, label: 'Email'),
+                      // SENHA
+                      const CustomTextField(
                         icon: Icons.lock,
                         label: 'Senha',
-                        isObscure: true,
-                        controller: textFieldController.passwordController,
+                        isSecret: true,
                       ),
                       //Entrar
                       Padding(
@@ -69,10 +64,8 @@ class _LoginPageState extends State<LoginPage> {
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(28))),
                               onPressed: () {
-                                String email =
-                                    textFieldController.getEmailFromTextField();
-                                String password = textFieldController
-                                    .getPasswordFromTextField();
+                                textFieldController.getEmailFromTextField();
+                                textFieldController.getPasswordFromTextField();
                                 Navigator.popAndPushNamed(
                                     context, "/EnterPage");
                               },
