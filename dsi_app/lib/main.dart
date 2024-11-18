@@ -4,6 +4,7 @@ import 'package:dsi_app/src/view/LoginPage.dart';
 import 'package:dsi_app/src/view/RegisterPage.dart';
 import 'package:dsi_app/src/view/EnterPage.dart';
 import 'package:dsi_app/src/view/ForgotPassword.dart';
+import 'package:dsi_app/src/view/ConfigPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
           Registration.routeName: (context) => Registration(),
           EnterPage.routeName: (context) => const EnterPage(),
           Forgotpassword.routeName: (context) => const Forgotpassword(),
+          ConfigPage.routeName: (context) => const ConfigPage(),
         });
   }
 }

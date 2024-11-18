@@ -15,7 +15,7 @@ class _EnterPageState extends State<EnterPage> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Tela Principal'),
+          title: const Text('Tela Principal'),
         ),
         body: Container(
           color: Colors.green,
@@ -23,19 +23,30 @@ class _EnterPageState extends State<EnterPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'Você Logou!',
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 20.0),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, "/Login");
-                  },
-                  child: Text('Voltar'),
+                Padding(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/Login");
+                    },
+                    child: const Text('Voltar'),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/Config");
+                    },
+                    child: const Text('Configurar'),
+                  ),
                 ),
               ],
             ),
