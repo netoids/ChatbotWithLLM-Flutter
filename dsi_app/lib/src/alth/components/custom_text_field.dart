@@ -31,7 +31,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 15),
+      padding: const EdgeInsets.only(bottom: 25),
       child: TextFormField(
         inputFormatters: widget.inputFormaters,
         obscureText: isObscure,
@@ -50,7 +50,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             labelText: widget.label,
             isDense: true,
             border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(18))),
+                OutlineInputBorder(borderRadius: BorderRadius.circular(15))),
       ),
     );
   }
