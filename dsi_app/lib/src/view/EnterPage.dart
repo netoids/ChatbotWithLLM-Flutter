@@ -18,7 +18,7 @@ class _EnterPageState extends State<EnterPage> {
           title: Text('Tela Principal'),
         ),
         body: Container(
-          color: Colors.white,
+          color: Colors.green,
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
