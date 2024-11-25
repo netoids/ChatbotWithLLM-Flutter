@@ -18,7 +18,7 @@ class _EnterPageState extends State<EnterPage> {
           title: const Text('Tela Principal'),
         ),
         body: Container(
-          color: Colors.green,
+          color: Color.fromARGB(255, 50, 201, 199),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

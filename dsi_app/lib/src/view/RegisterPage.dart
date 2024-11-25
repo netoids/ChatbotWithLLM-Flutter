@@ -30,7 +30,9 @@ class Registration extends StatelessWidget {
                     child: Center(
                       child: Text(
                         'Cadastro',
-                        style: TextStyle(color: Colors.green, fontSize: 35),
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 50, 201, 199),
+                            fontSize: 35),
                       ),
                     ),
                   ),
@@ -104,7 +106,8 @@ class Registration extends StatelessWidget {
                             height: 50,
                             child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.green,
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 50, 201, 199),
                                     foregroundColor: Colors.white,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(18),
@@ -128,7 +131,7 @@ class Registration extends StatelessWidget {
                 top: 10,
                 child: SafeArea(
                   child: IconButton(
-                    color: Colors.green,
+                    color: Color.fromARGB(255, 50, 201, 199),
                     onPressed: () {
                       Navigator.pushNamed(context, "/Login");
                     },

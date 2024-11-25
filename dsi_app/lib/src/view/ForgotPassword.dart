@@ -18,7 +18,7 @@ class _ForgotPasswordState extends State<Forgotpassword> {
           title: Text('Esqueceu Senha'),
         ),
         body: Container(
-          color: Colors.green,
+          color: Color.fromARGB(255, 50, 201, 199),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

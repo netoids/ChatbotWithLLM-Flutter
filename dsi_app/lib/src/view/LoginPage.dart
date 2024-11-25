@@ -17,7 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
+      backgroundColor: const Color.fromARGB(255, 50, 201, 199),
       body: Column(
         children: [
           const Expanded(
@@ -60,7 +60,8 @@ class _LoginPageState extends State<LoginPage> {
                             padding: const EdgeInsets.only(top: 15),
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.green,
+                                  backgroundColor:
+                                      Color.fromARGB(255, 50, 201, 199),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(28))),
                               onPressed: () {
@@ -89,14 +90,14 @@ class _LoginPageState extends State<LoginPage> {
                               color: Colors.grey,
                               margin:
                                   const EdgeInsets.symmetric(horizontal: 10)),
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.symmetric(vertical: 16),
                             child: Text(
                               'ou',
                               style: TextStyle(
                                   fontSize: 26,
                                   fontWeight: FontWeight.bold,
-                                  color: AppColors.green),
+                                  color: Color.fromARGB(255, 50, 201, 199)),
                             ),
                           ),
                           Container(
