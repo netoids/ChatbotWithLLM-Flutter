@@ -23,7 +23,7 @@ class _ConfigPageState extends State<ConfigPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'Você Logou!',
                   style: TextStyle(
                     fontSize: 20.0,

@@ -34,7 +34,8 @@ class _HomeScreenState extends State<EnterPage> {
 
   // Método chamado sempre que o usuário fizer uma nova mensagem
   void onNewMessage() {
-    FocusManager.instance.primaryFocus!.unfocus(); // Retira o focus do TextField
+    FocusManager.instance.primaryFocus!
+        .unfocus(); // Retira o focus do TextField
 
     if (!formKey.currentState!.validate()) return;
 
@@ -93,10 +94,19 @@ class _HomeScreenState extends State<EnterPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('LUMI', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-        backgroundColor: const Color.fromARGB(255, 3, 133, 150), 
+        title: const Text('LUMI',
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        backgroundColor: const Color.fromARGB(255, 3, 133, 150),
         elevation: 5,
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings), // Ícone do botão
+            onPressed: () {
+              Navigator.popAndPushNamed(context, "/Config");
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),
@@ -105,7 +115,7 @@ class _HomeScreenState extends State<EnterPage> {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 186, 112, 186),
+                  color: Color.fromARGB(500, 50, 201, 199),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: ListView.separated(
@@ -161,7 +171,9 @@ class _HomeScreenState extends State<EnterPage> {
         ),
       ),
     );
-  }}
+  }
+}
+
 class CardMessage extends StatelessWidget {
   const CardMessage({
     required this.message,
@@ -200,7 +212,9 @@ class CardMessage extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 MarkdownBody(
-                  data: message.isUser ? message.question! : message.fullIaResponseText,
+                  data: message.isUser
+                      ? message.question!
+                      : message.fullIaResponseText,
                 ),
               ],
             ),
