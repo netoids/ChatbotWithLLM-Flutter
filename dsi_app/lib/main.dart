@@ -4,7 +4,7 @@ import 'package:dsi_app/src/view/LoginPage.dart';
 import 'package:dsi_app/src/view/RegisterPage.dart';
 import 'package:dsi_app/src/view/EnterPage.dart';
 import 'package:dsi_app/src/view/ForgotPassword.dart';
-import 'package:dsi_app/src/view/ConfigPage.dart';
+import 'package:dsi_app/src/view/UserConfig.dart';
 
 void main() {
   runApp(const MyApp());
