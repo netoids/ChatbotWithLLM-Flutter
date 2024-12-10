@@ -94,6 +94,12 @@ class _HomeScreenState extends State<EnterPage> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.list),
+          onPressed: () {
+            Navigator.popAndPushNamed(context, "/ChatHistory");
+          },
+        ),
         title: const Text('LUMI',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         backgroundColor: const Color.fromARGB(255, 3, 133, 150),

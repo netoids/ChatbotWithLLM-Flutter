@@ -1,3 +1,4 @@
+import 'package:dsi_app/src/view/chat_history.dart';
 import 'package:flutter/material.dart';
 import 'package:dsi_app/src/shared/AppColors.dart';
 import 'package:dsi_app/src/view/LoginPage.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
           EnterPage.routeName: (context) => const EnterPage(),
           Forgotpassword.routeName: (context) => const Forgotpassword(),
           ConfigPage.routeName: (context) => const ConfigPage(),
+          ChatHistory.routeName: (context) => const ChatHistory(),
         });
   }
 }
