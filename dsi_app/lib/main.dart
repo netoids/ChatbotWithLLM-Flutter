@@ -1,3 +1,4 @@
+import 'package:dsi_app/src/view/EnterPage2.dart';
 import 'package:flutter/material.dart';
 import 'package:dsi_app/src/shared/AppColors.dart';
 import 'package:dsi_app/src/view/LoginPage.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
           Registration.routeName: (context) => Registration(),
           EnterPage.routeName: (context) => const EnterPage(),
           Forgotpassword.routeName: (context) => const Forgotpassword(),
+          EnterPage2.routeName: (context) => const EnterPage2(),
           ConfigPage.routeName: (context) => const ConfigPage(),
         });
   }
