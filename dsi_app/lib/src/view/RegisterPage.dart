@@ -1,3 +1,4 @@
+import 'package:dsi_app/src/services/autentication_service.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:dsi_app/src/alth/components/custom_text_field.dart';
@@ -5,6 +6,12 @@ import 'package:dsi_app/src/alth/components/custom_text_field.dart';
 class Registration extends StatelessWidget {
   static const routeName = '/Registration';
   Registration({super.key});
+  
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  final AutenticationService _autenticationService = AutenticationService();
 
   final cpfFormater = MaskTextInputFormatter(
       mask: '###.###.###-##', filter: {'#': RegExp(r'[0-9]')});
@@ -20,7 +27,7 @@ class Registration extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: SizedBox(
-          height: size.height,
+          height: size.height * 0.55,
           width: size.width,
           child: Stack(
             children: [
@@ -36,9 +43,7 @@ class Registration extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   // Formulario
-
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 32,
@@ -50,55 +55,43 @@ class Registration extends StatelessWidget {
                             BorderRadius.vertical(top: Radius.circular(45))),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-
-                      // EMAIL
                       children: [
-                        // NOME
-                        const CustomTextField(
-                          icon: Icons.person,
-                          label: 'Nome',
+                        TextFormField(
+                          controller: _nameController,
+                          decoration: InputDecoration(
+                            hintText: 'Digite seu nome',
+                            labelText: 'Nome',
+                            prefixIcon: const Icon(Icons.person),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                          ),
                         ),
-
-                        // SOBRENOME
-                        const CustomTextField(
-                          icon: Icons.person,
-                          label: 'Sobrenome',
+                        const SizedBox(height: 16),
+                        TextFormField(
+                          controller: _emailController,
+                          decoration: InputDecoration(
+                            hintText: 'Digite seu email',
+                            labelText: 'Email',
+                            prefixIcon: const Icon(Icons.email),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                          ),
                         ),
-
-                        //CPF
-                        CustomTextField(
-                          icon: Icons.file_copy,
-                          label: 'CPF',
-                          inputFormaters: [cpfFormater],
+                        const SizedBox(height: 16),
+                        TextFormField(
+                          controller: _passwordController,
+                          decoration: InputDecoration(
+                            hintText: 'Digite sua senha',
+                            labelText: 'Senha',
+                            prefixIcon: const Icon(Icons.lock),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                          ),
+                          obscureText: true,
                         ),
-
-                        // EMAIL
-                        const CustomTextField(
-                          icon: Icons.email,
-                          label: 'Email',
-                        ),
-
-                        // CELULAR
-                        CustomTextField(
-                          icon: Icons.phone,
-                          label: 'Número Para Contato',
-                          inputFormaters: [telefoneFormater],
-                        ),
-
-                        // SENHA
-                        const CustomTextField(
-                          icon: Icons.lock,
-                          label: 'Senha',
-                          isSecret: true,
-                        ),
-
-                        // SENHA
-                        const CustomTextField(
-                          icon: Icons.lock,
-                          label: 'Confirmar Senha',
-                          isSecret: true,
-                        ),
-
                         //BOTÃO CADASTRAR USUÁRIO
                         Padding(
                           padding: const EdgeInsets.only(top: 50),
@@ -112,7 +105,13 @@ class Registration extends StatelessWidget {
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(18),
                                     )),
-                                onPressed: () {},
+                                onPressed: () {
+                                  _autenticationService.registerUser(
+                                    nome: _nameController.text,
+                                    email: _emailController.text,
+                                    senha: _passwordController.text);
+                                  Navigator.pushNamed(context, "/LoginPage");
+                                },
                                 child: const Text(
                                   'Criar Conta',
                                   style: TextStyle(fontSize: 18),
@@ -131,7 +130,7 @@ class Registration extends StatelessWidget {
                 top: 10,
                 child: SafeArea(
                   child: IconButton(
-                    color: Color.fromARGB(255, 50, 201, 199),
+                    color: const Color.fromARGB(255, 50, 201, 199),
                     onPressed: () {
                       Navigator.pushNamed(context, "/Login");
                     },

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "964091017306",
+    "project_id": "lumi-2883e",
+    "storage_bucket": "lumi-2883e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:964091017306:android:1e3812d264f2f157a9c063",
+        "android_client_info": {
+          "package_name": "com.lumi.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwZPnfmYr4Rvpln395MN0kkS_6tYWvzCE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:964091017306:android:b5bc50ae42d885eda9c063",
+        "android_client_info": {
+          "package_name": "lumi.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwZPnfmYr4Rvpln395MN0kkS_6tYWvzCE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

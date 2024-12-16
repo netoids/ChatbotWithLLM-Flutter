@@ -1,3 +1,4 @@
+import 'package:dsi_app/src/services/autentication_service.dart';
 import 'package:dsi_app/src/shared/AppColors.dart';
 import 'package:flutter/material.dart';
 import 'package:dsi_app/src/alth/components/custom_text_field.dart';
@@ -12,7 +13,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextFieldController textFieldController = TextFieldController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final AutenticationService _autenticationService = AutenticationService();
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +46,31 @@ class _LoginPageState extends State<LoginPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       //Email
-                      const CustomTextField(icon: Icons.email, label: 'Email'),
+                      TextFormField(
+                          controller: _emailController,
+                          decoration: InputDecoration(
+                            hintText: 'Digite seu email',
+                            labelText: 'Email',
+                            prefixIcon: const Icon(Icons.email),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                          ),
+                        ),
+                      const SizedBox(height: 16),
                       // SENHA
-                      const CustomTextField(
-                        icon: Icons.lock,
-                        label: 'Senha',
-                        isSecret: true,
-                      ),
+                      TextFormField(
+                          controller: _passwordController,
+                          decoration: InputDecoration(
+                            hintText: 'Digite sua senha',
+                            labelText: 'Senha',
+                            prefixIcon: const Icon(Icons.lock),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                          ),
+                          obscureText: true,
+                        ),
                       //Entrar
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -61,14 +82,14 @@ class _LoginPageState extends State<LoginPage> {
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   backgroundColor:
-                                      Color.fromARGB(255, 50, 201, 199),
+                                      const Color.fromARGB(255, 50, 201, 199),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(28))),
                               onPressed: () {
-                                textFieldController.getEmailFromTextField();
-                                textFieldController.getPasswordFromTextField();
-                                Navigator.popAndPushNamed(
-                                    context, "/EnterPage");
+                                _autenticationService.loginUser(
+                                  email: _emailController.text,
+                                  senha: _passwordController.text).then((value) => null,);
+                                  Navigator.pushNamed(context, '/EnterPage');
                               },
                               child: const Text(
                                 'Entrar',
