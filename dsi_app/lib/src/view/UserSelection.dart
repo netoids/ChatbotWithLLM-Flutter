@@ -1,7 +1,7 @@
-import 'package:dsi_app/src/view/EnterPage.dart';
+import 'package:dsi_app/src/view/UserChatbotPage.dart';
 import 'package:flutter/material.dart';
-import 'add_user_screen.dart';
-import 'user_responsible.dart';
+import 'AddUserScreen.dart';
+import 'UserSelectionResponsible.dart';
 
 class UserSelectionScreen extends StatefulWidget {
   const UserSelectionScreen({super.key});

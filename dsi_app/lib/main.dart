@@ -1,12 +1,12 @@
-import 'package:dsi_app/src/view/chat_history.dart';
+import 'package:dsi_app/src/view/ChatbotHistory.dart';
 import 'package:flutter/material.dart';
 import 'package:dsi_app/src/shared/AppColors.dart';
 import 'package:dsi_app/src/view/LoginPage.dart';
 import 'package:dsi_app/src/view/RegisterPage.dart';
-import 'package:dsi_app/src/view/EnterPage.dart';
+import 'package:dsi_app/src/view/UserChatbotPage.dart';
 import 'package:dsi_app/src/view/ForgotPassword.dart';
 import 'package:dsi_app/src/view/UserConfig.dart';
-import 'package:dsi_app/src/view/user_selection_screen.dart';
+import 'package:dsi_app/src/view/UserSelection.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
