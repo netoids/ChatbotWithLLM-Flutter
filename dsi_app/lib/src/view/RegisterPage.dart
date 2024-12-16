@@ -1,7 +1,7 @@
 import 'package:dsi_app/src/services/autentication_service.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:dsi_app/src/alth/components/custom_text_field.dart';
+//import 'package:dsi_app/src/alth/components/custom_text_field.dart';
 
 class Registration extends StatelessWidget {
   static const routeName = '/Registration';

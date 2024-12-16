@@ -1,12 +1,14 @@
 import 'dart:convert';
-//import 'package:flutter_ollama_ai/screens/history.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:dsi_app/src/Controller/ollama_controller.dart';
 import 'package:dsi_app/src/models/Chatbot_model.dart';
 
 class EnterPage extends StatefulWidget {
-  const EnterPage({super.key});
+  final String userName; // Parâmetro recebido
+
+  const EnterPage({super.key, required this.userName});
+
   static const routeName = '/EnterPage';
 
   @override
@@ -14,71 +16,48 @@ class EnterPage extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<EnterPage> {
-  // TextEditingController para obter o texto do campo de mensagem
   final messageController = TextEditingController();
-
-  // ScrollController para sempre mantermos a lista visível, conforme a IA vai gerando a resposta
   final scrollController = ScrollController();
-
   final formKey = GlobalKey<FormState>();
-
-  // Armazenará as mensagens do chat
   List<ChatbotMessageModel> messages = [];
 
   @override
   void dispose() {
     messageController.dispose();
-
     super.dispose();
   }
 
-  // Método chamado sempre que o usuário fizer uma nova mensagem
   void onNewMessage() {
-    FocusManager.instance.primaryFocus!
-        .unfocus(); // Retira o focus do TextField
-
+    FocusManager.instance.primaryFocus?.unfocus();
     if (!formKey.currentState!.validate()) return;
 
     final question = messageController.text;
 
     setState(() {
-      // Adiciona a mensagem do usuário a lista de mensagens
       messages.add(ChatbotMessageModel.usuario(question));
     });
 
-    // Cria uma nova mensagem, de IA, que futuramente terá as respostas adicionadas conforme a Stream de dados
     final messageIa = ChatbotMessageModel.ia();
 
     setState(() {
       messages.add(messageIa);
     });
 
-    // Faz a requisição pra API, obtendo uma Stream<String>? como resposta
     final stream = OllamaController().generateResponse(question);
 
-    // Ouve a Stream
     stream?.listen(
       (data) {
-        // Decodifica a resposta e adiciona a resposta na mensagem criada para a IA
         final iaResponse = IAResponseModel.fromWeb(jsonDecode(data));
         setState(() {
           messageIa.addIAResponse(iaResponse);
         });
 
-        // A cada nova resposta da IA, mantém a ListView sempre visível (final do conteúdo)
         if (scrollController.hasClients) {
           scrollController.jumpTo(scrollController.position.maxScrollExtent);
         }
       },
-      onError: (err) {
-        // Tratamento de erros na geração de respostas
-      },
-      onDone: () {
-        // Ao finalizar a geração das respostas
-      },
     );
 
-    // Limpa o prompt de mensagem após a inserção
     messageController.clear();
   }
 
@@ -100,14 +79,19 @@ class _HomeScreenState extends State<EnterPage> {
             Navigator.popAndPushNamed(context, "/ChatHistory");
           },
         ),
-        title: const Text('LUMI',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        title: Text(
+          'LUMI - ${widget.userName}', // Exibe o nome do usuário
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         backgroundColor: const Color.fromARGB(255, 3, 133, 150),
         elevation: 5,
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.settings), // Ícone do botão
+            icon: const Icon(Icons.settings),
             onPressed: () {
               Navigator.popAndPushNamed(context, "/Config");
             },
@@ -121,7 +105,7 @@ class _HomeScreenState extends State<EnterPage> {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(500, 50, 201, 199),
+                  color: const Color.fromARGB(500, 50, 201, 199),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: ListView.separated(
@@ -130,7 +114,6 @@ class _HomeScreenState extends State<EnterPage> {
                   itemCount: messages.length,
                   itemBuilder: (_, index) {
                     final message = messages[index];
-
                     return CardMessage(message: message);
                   },
                   separatorBuilder: (_, __) => const SizedBox(height: 5),
@@ -146,11 +129,8 @@ class _HomeScreenState extends State<EnterPage> {
                   if (message!.trim().isEmpty) {
                     return 'Informe uma mensagem';
                   }
-
                   return null;
                 },
-                autocorrect: false,
-                enableSuggestions: false,
                 decoration: InputDecoration(
                   hintText: 'Insira sua mensagem...',
                   labelText: 'Mensagem',
@@ -159,15 +139,9 @@ class _HomeScreenState extends State<EnterPage> {
                     fontSize: 18,
                   ),
                   border: borderDecoration,
-                  errorBorder: borderDecoration,
-                  enabledBorder: borderDecoration,
-                  focusedBorder: borderDecoration,
-                  disabledBorder: borderDecoration,
-                  focusedErrorBorder: borderDecoration,
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.send),
                     onPressed: onNewMessage,
-                    tooltip: 'Enviar',
                   ),
                 ),
               ),
@@ -181,10 +155,7 @@ class _HomeScreenState extends State<EnterPage> {
 }
 
 class CardMessage extends StatelessWidget {
-  const CardMessage({
-    required this.message,
-    super.key,
-  });
+  const CardMessage({required this.message, super.key});
 
   final ChatbotMessageModel message;
 
@@ -195,7 +166,6 @@ class CardMessage extends StatelessWidget {
       child: ConstrainedBox(
         constraints: const BoxConstraints(minWidth: 300),
         child: Card(
-          elevation: 1,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
             side: BorderSide(

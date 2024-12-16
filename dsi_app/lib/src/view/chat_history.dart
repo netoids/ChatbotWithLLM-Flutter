@@ -14,15 +14,12 @@ class _ChatHistoryState extends State<ChatHistory> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Histórico', 
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)
-        ),
+        title: const Text('Histórico',
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         backgroundColor: const Color.fromARGB(255, 3, 133, 150),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.popAndPushNamed(context, "/EnterPage")
-        ),
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.pop(context, "/Config")),
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(8),
@@ -31,7 +28,8 @@ class _ChatHistoryState extends State<ChatHistory> {
           return Card(
             child: ListTile(
               title: Text('Conversa ${index + 1}'),
-              subtitle: Text('Data: ${DateTime.now().toString().split(' ')[0]}'),
+              subtitle:
+                  Text('Data: ${DateTime.now().toString().split(' ')[0]}'),
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 // Handle conversation tap
