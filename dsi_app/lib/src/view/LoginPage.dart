@@ -1,8 +1,7 @@
 import 'package:dsi_app/src/services/autentication_service.dart';
 import 'package:dsi_app/src/shared/AppColors.dart';
 import 'package:flutter/material.dart';
-//import 'package:dsi_app/src/alth/components/custom_text_field.dart';
-//import 'package:dsi_app/src/Controller/TextFieldController.dart';
+import 'package:dsi_app/src/core/snackbar.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -88,8 +87,15 @@ class _LoginPageState extends State<LoginPage> {
                               onPressed: () {
                                 _autenticationService.loginUser(
                                   email: _emailController.text,
-                                  senha: _passwordController.text).then((value) => null,);
-                                  Navigator.pushNamed(context, '/UserSelection');
+                                  senha: _passwordController.text).then((String? error){
+                                    print(error);
+                                    if (error != null){
+                                      showSnackBar(context: context, message: error);
+                                    } else {
+                                      Navigator.pushNamed(context, "/UserSelection");
+                                    }
+                                  }
+                                  ); 
                               },
                               child: const Text(
                                 'Entrar',

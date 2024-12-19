@@ -8,7 +8,7 @@ class OllamaRepository {
     };
 
     yield* HttpService.postStream(
-      url: 'http://192.168.1.100:8080/api/generate',
+      url: 'http://10.34.129.121:8080/api/generate',
       body: body,
     );
   }

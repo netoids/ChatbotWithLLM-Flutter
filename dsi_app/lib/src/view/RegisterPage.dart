@@ -1,7 +1,7 @@
 import 'package:dsi_app/src/services/autentication_service.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-//import 'package:dsi_app/src/alth/components/custom_text_field.dart';
+import 'package:dsi_app/src/core/snackbar.dart';
 
 class Registration extends StatelessWidget {
   static const routeName = '/Registration';
@@ -109,8 +109,13 @@ class Registration extends StatelessWidget {
                                   _autenticationService.registerUser(
                                     nome: _nameController.text,
                                     email: _emailController.text,
-                                    senha: _passwordController.text);
-                                  Navigator.pushNamed(context, "/LoginPage");
+                                    senha: _passwordController.text).then((String? error) {
+                                    if (error != null) {
+                                      showSnackBar(context: context, message: error);
+                                    } else {
+                                      Navigator.pushNamed(context, "/Login");
+                                    }
+                                  });
                                 },
                                 child: const Text(
                                   'Criar Conta',

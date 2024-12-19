@@ -37,10 +37,11 @@ class AutenticationService {
     );
     return null;
   } on FirebaseAuthException catch (e) {
-    if (e.code == 'user-not-found') {
-      return 'Usuário não encontrado.';
-    } else if (e.code == 'wrong-password') {
-      return 'Senha incorreta.';
+    if (e.code == 'invalid-email') {
+      return 'Email inválido.';
+    } 
+    if (e.code == 'invalid-credential') {
+      return 'Credenciais inválidas.';
     }
     return 'Erro desconhecido.';
   }
