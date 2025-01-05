@@ -29,6 +29,8 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 0, 163, 160),
       appBar: AppBar(
@@ -136,24 +138,35 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
               },
             ),
           ),
+          // BOTÃO "CRIAR CONTA" expandido horizontalmente com altura de 60 e cores ajustadas
           Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: ElevatedButton(
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => UserResponsible(users: users),
+            padding: const EdgeInsets.only(bottom: 20), // Eleva o botão
+            child: SizedBox(
+              width: size.width, // Ocupa toda a largura da tela
+              height: 60, // Altura ajustada
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 50, 201, 199),
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.zero,
                   ),
-                );
-                setState(() {});
-              },
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero,
+                ),
+                onPressed: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UserResponsible(users: users),
+                    ),
+                  );
+                  setState(() {});
+                },
+                child: const Text(
+                  'Entrar como responsável',
+                  style:
+                      TextStyle(fontSize: 18), // Aumentando o tamanho da fonte
                 ),
               ),
-              child: Text('Entrar como responsável'),
             ),
           ),
         ],

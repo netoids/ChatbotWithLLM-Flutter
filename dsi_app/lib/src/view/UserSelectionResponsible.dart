@@ -23,8 +23,12 @@ class _UserResponsibleState extends State<UserResponsible> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gerenciar Usuários'),
+        title: Text(
+          'Gerenciar Usuários',
+          style: TextStyle(color: Colors.white), // Cor da fonte para branco
+        ),
         backgroundColor: const Color.fromARGB(255, 0, 163, 160),
+        centerTitle: true, // Centraliza o título
       ),
       body: ListView.separated(
         itemCount: widget.users.length,
