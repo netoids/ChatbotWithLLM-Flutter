@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:dsi_app/src/Controller/ollama_controller.dart';
-import 'package:dsi_app/src/models/Chatbot_model.dart';
+import 'package:dsi_app/src/models/chatbot_model.dart';
 
 class EnterPage extends StatefulWidget {
   final String userName; // Parâmetro recebido

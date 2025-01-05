@@ -1,7 +1,7 @@
 //user_responsible.dart
 import 'package:flutter/material.dart';
-import 'UserEdit.dart';
-import 'UserManagement.dart';
+import 'user_edit.dart';
+import 'user_management.dart';
 
 class UserResponsible extends StatefulWidget {
   final List<String> users;
