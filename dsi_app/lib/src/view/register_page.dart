@@ -30,10 +30,10 @@ class Registration extends StatelessWidget {
           Column(
             children: [
               // TÍTULO DA PÁGINA
-              Expanded(
+              const Expanded(
                 flex: 1,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 32),
+                  padding: EdgeInsets.only(left: 32),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -62,7 +62,7 @@ class Registration extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       const SizedBox(
-                          height: 300), // Espaçamento acima dos campos
+                          height: 100), // Espaçamento acima dos campos
                       TextFormField(
                         controller: _nameController,
                         decoration: InputDecoration(

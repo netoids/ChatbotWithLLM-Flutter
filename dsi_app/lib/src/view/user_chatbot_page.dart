@@ -1,152 +1,96 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:dsi_app/src/Controller/ollama_controller.dart';
-import 'package:dsi_app/src/models/chatbot_model.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:intl/intl.dart';
 
 class EnterPage extends StatefulWidget {
-  final String userName; // Parâmetro recebido
-
+  final String userName;
+  
   const EnterPage({super.key, required this.userName});
-
   static const routeName = '/EnterPage';
 
   @override
-  State<EnterPage> createState() => _HomeScreenState();
+  State<EnterPage> createState() => _ChatScreenState();
 }
 
-class _HomeScreenState extends State<EnterPage> {
-  final messageController = TextEditingController();
-  final scrollController = ScrollController();
-  final formKey = GlobalKey<FormState>();
-  List<ChatbotMessageModel> messages = [];
+class _ChatScreenState extends State<EnterPage> {
+  TextEditingController _userInput =TextEditingController();
 
-  @override
-  void dispose() {
-    messageController.dispose();
-    super.dispose();
-  }
+  static const apiKey = "AIzaSyCDgkCO2MLuhvmjhh7cEmlJlGTqDUnO0xI";
 
-  void onNewMessage() {
-    FocusManager.instance.primaryFocus?.unfocus();
-    if (!formKey.currentState!.validate()) return;
+  final model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
 
-    final question = messageController.text;
+  final List<Message> _messages = [];
+
+  Future<void> sendMessage() async{
+    final message = _userInput.text;
 
     setState(() {
-      messages.add(ChatbotMessageModel.usuario(question));
+      _messages.add(Message(isUser: true, message: message, date: DateTime.now()));
     });
 
-    final messageIa = ChatbotMessageModel.ia();
+    final content = [Content.text(message)];
+    final response = await model.generateContent(content);
+
 
     setState(() {
-      messages.add(messageIa);
+      _messages.add(Message(isUser: false, message: response.text?? "", date: DateTime.now()));
     });
 
-    final stream = OllamaController().generateResponse(question);
-
-    stream?.listen(
-      (data) {
-        final iaResponse = IAResponseModel.fromWeb(jsonDecode(data));
-        setState(() {
-          messageIa.addIAResponse(iaResponse);
-        });
-
-        if (scrollController.hasClients) {
-          scrollController.jumpTo(scrollController.position.maxScrollExtent);
-        }
-      },
-    );
-
-    messageController.clear();
   }
-
+  
   @override
   Widget build(BuildContext context) {
-    final borderDecoration = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(50),
-      borderSide: BorderSide(
-        color: Colors.grey[800]!,
-        width: 2,
-      ),
-    );
-
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.list),
-          onPressed: () {
-            Navigator.popAndPushNamed(context, "/ChatHistory");
-          },
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.8), BlendMode.dstATop),
+            image: NetworkImage('https://i.pinimg.com/736x/44/f6/cd/44f6cd87a51ca7e2e232e088a69348a8.jpg'),
+            fit: BoxFit.cover
+          )
         ),
-        title: Text(
-          'LUMI - ${widget.userName}', // Exibe o nome do usuário
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: const Color.fromARGB(255, 3, 133, 150),
-        elevation: 5,
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () {
-              Navigator.popAndPushNamed(context, "/Config");
-            },
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(500, 50, 201, 199),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: ListView.separated(
-                  controller: scrollController,
-                  padding: const EdgeInsets.all(10),
-                  itemCount: messages.length,
-                  itemBuilder: (_, index) {
-                    final message = messages[index];
-                    return CardMessage(message: message);
-                  },
-                  separatorBuilder: (_, __) => const SizedBox(height: 5),
-                ),
-              ),
+                child: ListView.builder(itemCount:_messages.length,itemBuilder: (context,index){
+                  final message = _messages[index];
+                  return Messages(isUser: message.isUser, message: message.message, date: DateFormat('HH:mm').format(message.date));
+                })
             ),
-            const SizedBox(height: 10),
-            Form(
-              key: formKey,
-              child: TextFormField(
-                controller: messageController,
-                validator: (message) {
-                  if (message!.trim().isEmpty) {
-                    return 'Informe uma mensagem';
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  hintText: 'Insira sua mensagem...',
-                  labelText: 'Mensagem',
-                  labelStyle: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 15,
+                    child: TextFormField(
+                      style: TextStyle(color: Colors.black),
+                      controller: _userInput,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        label: Text('Enter Your Message')
+                      ),
+                    ),
                   ),
-                  border: borderDecoration,
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.send),
-                    onPressed: onNewMessage,
-                  ),
-                ),
+                  Spacer(),
+                  IconButton(
+                    padding: EdgeInsets.all(12),
+                      iconSize: 30,
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.black),
+                        foregroundColor: MaterialStateProperty.all(Colors.white),
+                        shape: MaterialStateProperty.all(CircleBorder())
+                      ),
+                      onPressed: (){
+                      sendMessage();
+                      },
+                      icon: Icon(Icons.send))
+                ],
               ),
-            ),
-            const SizedBox(height: 10),
+            )
           ],
         ),
       ),
@@ -154,48 +98,58 @@ class _HomeScreenState extends State<EnterPage> {
   }
 }
 
-class CardMessage extends StatelessWidget {
-  const CardMessage({required this.message, super.key});
+class Message{
+  final bool isUser;
+  final String message;
+  final DateTime date;
 
-  final ChatbotMessageModel message;
+  Message({ required this.isUser, required this.message, required this.date});
+}
+
+class Messages extends StatelessWidget {
+
+  final bool isUser;
+  final String message;
+  final String date;
+
+  const Messages(
+      {
+        super.key,
+        required this.isUser,
+        required this.message,
+        required this.date
+      });
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: message.isUser ? Alignment.centerRight : Alignment.centerLeft,
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(minWidth: 300),
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-            side: BorderSide(
-              color: Colors.grey[300]!,
-              width: 1.5,
-            ),
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(15),
+      margin: EdgeInsets.symmetric(vertical: 15).copyWith(
+        left: isUser ? 100:10,
+        right: isUser ? 10: 100
+      ),
+      decoration: BoxDecoration(
+        color: isUser ? Colors.blueAccent : Colors.grey.shade400,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          bottomLeft: isUser ? Radius.circular(10): Radius.zero,
+          topRight: Radius.circular(10),
+          bottomRight: isUser ? Radius.zero : Radius.circular(10)
+        )
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            message,
+            style: TextStyle(fontSize: 16,color: isUser ? Colors.white: Colors.black),
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  message.isUser ? 'Você' : 'Lumi',
-                  style: TextStyle(
-                    color: Colors.blue[500],
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                MarkdownBody(
-                  data: message.isUser
-                      ? message.question!
-                      : message.fullIaResponseText,
-                ),
-              ],
-            ),
-          ),
-        ),
+          Text(
+            date,
+            style: TextStyle(fontSize: 10,color: isUser ? Colors.white: Colors.black,),
+          )
+        ],
       ),
     );
   }
