@@ -19,162 +19,175 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 50, 201, 199),
+      backgroundColor: const Color.fromARGB(255, 240, 245, 250),
       body: Column(
         children: [
-          const Expanded(
+          // LOGO
+          Expanded(
             flex: 2,
-            child: Text("Logo"),
+            child: Center(
+              child: Text(
+                "Logo",
+                style: TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                  color: const Color.fromARGB(255, 50, 201, 199),
+                ),
+              ),
+            ),
           ),
           Expanded(
             flex: 3,
             child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 52,
-                vertical: 40,
-              ),
-              decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(45))),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      //Email
-                      TextFormField(
-                          controller: _emailController,
-                          decoration: InputDecoration(
-                            hintText: 'Digite seu email',
-                            labelText: 'Email',
-                            prefixIcon: const Icon(Icons.email),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(18),
-                            ),
-                          ),
-                        ),
-                      const SizedBox(height: 16),
-                      // SENHA
-                      TextFormField(
-                          controller: _passwordController,
-                          decoration: InputDecoration(
-                            hintText: 'Digite sua senha',
-                            labelText: 'Senha',
-                            prefixIcon: const Icon(Icons.lock),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(18),
-                            ),
-                          ),
-                          obscureText: true,
-                        ),
-                      //Entrar
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 50),
-                        child: SizedBox(
-                          height: 60,
-                          width: double.infinity,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 15),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 50, 201, 199),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(28))),
-                              onPressed: () {
-                                _autenticationService.loginUser(
-                                  email: _emailController.text,
-                                  senha: _passwordController.text).then((String? error){
-                                    print(error);
-                                    if (error != null){
-                                      showSnackBar(context: context, message: error);
-                                    } else {
-                                      Navigator.pushNamed(context, "/UserSelection");
-                                    }
-                                  }
-                                  ); 
-                              },
-                              child: const Text(
-                                'Entrar',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Color.fromARGB(255, 255, 255, 255)),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                              height: 1,
-                              width: 100,
-                              color: Colors.grey,
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 10)),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 16),
-                            child: Text(
-                              'ou',
-                              style: TextStyle(
-                                  fontSize: 26,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 50, 201, 199)),
-                            ),
-                          ),
-                          Container(
-                              height: 1,
-                              width: 100,
-                              color: Colors.grey,
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 10)),
-                        ],
-                      ),
-
-                      ///CadastroButton
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 60),
-                        child: SizedBox(
-                          height: 50,
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.popAndPushNamed(
-                                  context, '/Registration');
-                            },
-                            style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.all(20),
-                              backgroundColor: Colors.white,
-                              side: BorderSide(color: Colors.grey),
-                            ),
-                            child: Text(
-                              "Criar Conta",
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.black),
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/ForgotPassword');
-                          },
-                          child: Text(
-                            'Esqueceu a senha?',
-                            style: TextStyle(color: AppColors.red),
-                          ),
-                        ),
-                      ),
-                    ],
+              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 40),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(45)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade300,
+                    blurRadius: 20,
+                    offset: Offset(0, -5),
                   ),
+                ],
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // EMAIL FIELD
+                    TextFormField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        hintText: 'Digite seu email',
+                        labelText: 'Email',
+                        prefixIcon: Icon(Icons.email, color: Colors.grey),
+                        filled: true,
+                        fillColor: Colors.grey.shade100,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(18),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    // PASSWORD FIELD
+                    TextFormField(
+                      controller: _passwordController,
+                      decoration: InputDecoration(
+                        hintText: 'Digite sua senha',
+                        labelText: 'Senha',
+                        prefixIcon: Icon(Icons.lock, color: Colors.grey),
+                        filled: true,
+                        fillColor: Colors.grey.shade100,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(18),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                      obscureText: true,
+                    ),
+                    const SizedBox(height: 24),
+                    // LOGIN BUTTON
+                    SizedBox(
+                      height: 55,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color.fromARGB(255, 50, 201, 199),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(28),
+                          ),
+                        ),
+                        onPressed: () {
+                          _autenticationService
+                              .loginUser(
+                                  email: _emailController.text,
+                                  senha: _passwordController.text)
+                              .then((String? error) {
+                            if (error != null) {
+                              showSnackBar(context: context, message: error);
+                            } else {
+                              Navigator.pushNamed(context, "/UserSelection");
+                            }
+                          });
+                        },
+                        child: const Text(
+                          'Entrar',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    // DIVIDER
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Divider(
+                            color: Colors.grey.shade300,
+                            thickness: 1,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(
+                            'ou',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.grey.shade600,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Divider(
+                            color: Colors.grey.shade300,
+                            thickness: 1,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    // SIGN UP BUTTON
+                    SizedBox(
+                      height: 55,
+                      width: double.infinity,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          Navigator.popAndPushNamed(context, '/Registration');
+                        },
+                        style: OutlinedButton.styleFrom(
+                          side: BorderSide(
+                              color: const Color.fromARGB(255, 50, 201, 199)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(28)),
+                        ),
+                        child: Text(
+                          "Criar Conta",
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: const Color.fromARGB(255, 50, 201, 199),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    // FORGOT PASSWORD BUTTON
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/ForgotPassword');
+                      },
+                      child: Text(
+                        'Esqueceu a senha?',
+                        style: TextStyle(color: AppColors.red),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

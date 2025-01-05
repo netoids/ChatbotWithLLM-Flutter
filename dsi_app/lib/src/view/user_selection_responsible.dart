@@ -1,4 +1,3 @@
-//user_responsible.dart
 import 'package:flutter/material.dart';
 import 'user_edit.dart';
 import 'user_management.dart';
@@ -24,11 +23,19 @@ class _UserResponsibleState extends State<UserResponsible> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gerenciar Usuários'),
+        title: Text(
+          'Gerenciar Usuários',
+          style: TextStyle(color: Colors.white), // Cor da fonte para branco
+        ),
         backgroundColor: const Color.fromARGB(255, 0, 163, 160),
+        centerTitle: true, // Centraliza o título
       ),
-      body: ListView.builder(
+      body: ListView.separated(
         itemCount: widget.users.length,
+        separatorBuilder: (context, index) => Divider(
+          thickness: 1,
+          color: Colors.grey.shade300,
+        ),
         itemBuilder: (context, index) {
           return Dismissible(
             key: Key(widget.users[index]),
@@ -51,54 +58,68 @@ class _UserResponsibleState extends State<UserResponsible> {
                 color: Colors.white,
               ),
             ),
-            child: ListTile(
-              title: GestureDetector(
-                onTap: () {
-                  // Navega para a tela de gerenciamento de usuário
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => UserManagement(
-                        userName: widget.users[index],
-                      ),
-                    ),
-                  );
-                },
-                onLongPress: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => UserEdit(
-                        userName: widget.users[index],
-                        onUpdate: (newName) {
-                          setState(() {
-                            widget.users[index] = newName;
-                          });
-                        },
-                      ),
-                    ),
-                  );
-                },
-                child: Text(widget.users[index]),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade200,
+                    blurRadius: 5,
+                    offset: Offset(0, 2),
+                  ),
+                ],
               ),
-              trailing: GestureDetector(
-                onTap: () {
-                  // Navega para a tela de edição do usuário
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => UserEdit(
-                        userName: widget.users[index],
-                        onUpdate: (newName) {
-                          setState(() {
-                            widget.users[index] = newName;
-                          });
-                        },
+              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              child: ListTile(
+                title: GestureDetector(
+                  onTap: () {
+                    // Navega para a tela de gerenciamento de usuário
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UserManagement(
+                          userName: widget.users[index],
+                        ),
                       ),
-                    ),
-                  );
-                },
-                child: Icon(Icons.edit),
+                    );
+                  },
+                  onLongPress: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UserEdit(
+                          userName: widget.users[index],
+                          onUpdate: (newName) {
+                            setState(() {
+                              widget.users[index] = newName;
+                            });
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                  child: Text(widget.users[index]),
+                ),
+                trailing: GestureDetector(
+                  onTap: () {
+                    // Navega para a tela de edição do usuário
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UserEdit(
+                          userName: widget.users[index],
+                          onUpdate: (newName) {
+                            setState(() {
+                              widget.users[index] = newName;
+                            });
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                  child: Icon(Icons.edit),
+                ),
               ),
             ),
           );
