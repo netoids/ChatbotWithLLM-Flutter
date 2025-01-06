@@ -41,13 +41,21 @@ class _ChatScreenState extends State<EnterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 0, 163, 160),
+        centerTitle: true,
+        title: const Text(
+          'LUMI',
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
       body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-              colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.8), BlendMode.dstATop),
-            image: NetworkImage('https://i.pinimg.com/736x/44/f6/cd/44f6cd87a51ca7e2e232e088a69348a8.jpg'),
-            fit: BoxFit.cover
-          )
+        decoration: const BoxDecoration(
+          // image: DecorationImage(
+          //     colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.8), BlendMode.dstATop),
+          //   image: const NetworkImage('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEigDbiBM6I5Fx1Jbz-hj_mqL_KtAPlv9UsQwpthZIfFLjL-hvCmst09I-RbQsbVt5Z0QzYI_Xj1l8vkS8JrP6eUlgK89GJzbb_P-BwLhVP13PalBm8ga1hbW5pVx8bswNWCjqZj2XxTFvwQ__u4ytDKvfFi5I2W9MDtH3wFXxww19EVYkN8IzIDJLh_aw/s1920/space-soldier-ai-wallpaper-4k.webp'),
+          //   fit: BoxFit.cover
+          // )
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -80,9 +88,9 @@ class _ChatScreenState extends State<EnterPage> {
                     padding: EdgeInsets.all(12),
                       iconSize: 30,
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.black),
-                        foregroundColor: MaterialStateProperty.all(Colors.white),
-                        shape: MaterialStateProperty.all(CircleBorder())
+                        backgroundColor: WidgetStateProperty.all(const Color.fromARGB(255, 0, 163, 160)),
+                        foregroundColor: WidgetStateProperty.all(Colors.white),
+                        shape: WidgetStateProperty.all(const CircleBorder())
                       ),
                       onPressed: (){
                       sendMessage();
@@ -130,7 +138,7 @@ class Messages extends StatelessWidget {
         right: isUser ? 10: 100
       ),
       decoration: BoxDecoration(
-        color: isUser ? Colors.blueAccent : Colors.grey.shade400,
+        color: isUser ? const Color.fromARGB(255, 0, 163, 160) : Colors.grey.shade400,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(10),
           bottomLeft: isUser ? Radius.circular(10): Radius.zero,
