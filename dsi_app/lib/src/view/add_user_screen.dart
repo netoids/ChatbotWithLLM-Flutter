@@ -7,6 +7,25 @@ class AddUserScreen extends StatefulWidget {
 
 class _AddUserScreenState extends State<AddUserScreen> {
   final TextEditingController _controller = TextEditingController();
+  final TextEditingController _dateController =
+      TextEditingController(); // Controlador para o campo de data
+
+  // Função para exibir o seletor de data
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(), // Data inicial (hoje)
+      firstDate: DateTime(1900), // Data mínima permitida
+      lastDate: DateTime(2101), // Data máxima permitida
+    );
+
+    if (pickedDate != null) {
+      setState(() {
+        _dateController.text =
+            "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}"; // Formato dd/MM/yyyy
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +40,18 @@ class _AddUserScreenState extends State<AddUserScreen> {
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
-      body: Stack(
-        children: [
-          Align(
-            alignment: Alignment(0.0, 0.3), // Levemente abaixo do centro
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: TextField(
+      body: Center(
+        // Centraliza o conteúdo verticalmente
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Column(
+            mainAxisAlignment:
+                MainAxisAlignment.center, // Centraliza verticalmente
+            crossAxisAlignment:
+                CrossAxisAlignment.center, // Centraliza horizontalmente
+            children: [
+              // Campo de nome do usuário
+              TextField(
                 controller: _controller,
                 decoration: InputDecoration(
                   labelText: 'Nome do Usuário',
@@ -45,9 +69,37 @@ class _AddUserScreenState extends State<AddUserScreen> {
                   ),
                 ),
               ),
-            ),
+              const SizedBox(height: 20), // Espaço entre os campos
+
+              // Campo de data (com funcionalidade de selecionar data)
+              GestureDetector(
+                onTap: () => _selectDate(context), // Abre o seletor de data
+                child: AbsorbPointer(
+                  // Impede a edição direta no campo de texto
+                  child: TextField(
+                    controller: _dateController,
+                    decoration: InputDecoration(
+                      labelText: 'Data de Nascimento',
+                      labelStyle: TextStyle(color: Colors.grey[700]),
+                      prefixIcon:
+                          Icon(Icons.calendar_today, color: Colors.grey[700]),
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: BorderSide.none,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: const BorderSide(color: Color(0xFF00A3A0)),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
       bottomNavigationBar: SizedBox(
         height: 56.0, // Altura do botão
