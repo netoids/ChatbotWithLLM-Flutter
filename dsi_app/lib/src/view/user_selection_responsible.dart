@@ -110,6 +110,30 @@ class _UserResponsibleState extends State<UserResponsible> {
                 color: Colors.grey.shade300,
               ),
               itemBuilder: (context, index) {
+                // Verifique o tipo de dado de 'birthDate'
+                String formattedBirthDate = '';
+                if (users[index]['birthDate'] != null) {
+                  if (users[index]['birthDate'] is String) {
+                    // Se for uma string, converta manualmente
+                    try {
+                      final dateParts = users[index]['birthDate'].split('/');
+                      if (dateParts.length == 3) {
+                        final day = int.parse(dateParts[1]);
+                        final month = int.parse(dateParts[0]);
+                        final year = int.parse(dateParts[2]);
+                        formattedBirthDate = '$day/$month/$year';
+                      }
+                    } catch (e) {
+                      print('Erro ao converter a data: $e');
+                    }
+                  } else if (users[index]['birthDate'] is Timestamp) {
+                    // Se for um Timestamp, converta para DateTime
+                    final birthDate = users[index]['birthDate'].toDate();
+                    formattedBirthDate =
+                        '${birthDate.day}/${birthDate.month}/${birthDate.year}';
+                  }
+                }
+
                 return Dismissible(
                   key: Key(users[index]['id']),
                   direction: DismissDirection.endToStart,
@@ -183,7 +207,16 @@ class _UserResponsibleState extends State<UserResponsible> {
                             ),
                           );
                         },
-                        child: Text(users[index]['name']),
+                        child: Row(
+                          children: [
+                            Text(users[index]['name']),
+                            const SizedBox(width: 8),
+                            Text(
+                              formattedBirthDate,
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
