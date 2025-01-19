@@ -58,6 +58,15 @@ class _UserResponsibleState extends State<UserResponsible> {
     try {
       final userId = users[index]['id'];
 
+      // Exibe a mensagem de sucesso ANTES de remover o item
+      final userName = users[index]['name'];
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('$userName foi removido com sucesso!'),
+          backgroundColor: Colors.green,
+        ),
+      );
+
       await FirebaseFirestore.instance
           .collection('users')
           .doc(widget.userId)
@@ -68,13 +77,6 @@ class _UserResponsibleState extends State<UserResponsible> {
       setState(() {
         users.removeAt(index); // Remove o usuário da lista local
       });
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('${users[index]['name']} foi removido com sucesso!'),
-          backgroundColor: Colors.green,
-        ),
-      );
     } catch (e) {
       print('Erro ao remover usuário: $e');
       ScaffoldMessenger.of(context).showSnackBar(
