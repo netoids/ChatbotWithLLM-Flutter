@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AddUserScreen extends StatefulWidget {
@@ -104,14 +106,59 @@ class _AddUserScreenState extends State<AddUserScreen> {
       bottomNavigationBar: SizedBox(
         height: 56.0, // Altura do botão
         child: ElevatedButton(
-          onPressed: () {
+          onPressed: () async {
             final userName = _controller.text.trim();
-            if (userName.isNotEmpty) {
-              Navigator.pop(context, userName);
-            } else {
+            final birthDate = _dateController.text.trim();
+
+            if (userName.isEmpty || birthDate.isEmpty) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('Por favor, insira um nome válido.'),
+                  content: Text('Por favor, preencha todos os campos.'),
+                  backgroundColor: Colors.red,
+                ),
+              );
+              return;
+            }
+
+            try {
+              // Obter o UID do usuário logado
+              final User? user = FirebaseAuth.instance.currentUser;
+              if (user == null) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Usuário não autenticado.'),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+                return;
+              }
+              final uid = user.uid;
+
+              // Adicionar dados ao Firestore
+              final docRef = FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(uid) // Caminho do UID do usuário logado
+                  .collection('profiles') // Subcoleção "profiles"
+                  .doc(); // Gerar ID automático para o perfil
+
+              await docRef.set({
+                'name': userName,
+                'birthDate': birthDate,
+                'createdAt': FieldValue.serverTimestamp(),
+              });
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Perfil adicionado com sucesso!'),
+                  backgroundColor: Colors.green,
+                ),
+              );
+
+              Navigator.pop(context); // Voltar para a tela anterior
+            } catch (e) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Erro ao adicionar perfil: $e'),
                   backgroundColor: Colors.red,
                 ),
               );

@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dsi_app/src/view/user_chatbot_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'add_user_screen.dart';
 import 'user_selection_responsible.dart';
@@ -12,18 +14,32 @@ class UserSelectionScreen extends StatefulWidget {
 }
 
 class _UserSelectionScreenState extends State<UserSelectionScreen> {
-  // Lista de usuários
-  List<String> users = [];
+  String? userId; // ID do usuário logado
 
-  void _addUser(String name) {
-    setState(() {
-      users.add(name);
-    });
+  @override
+  void initState() {
+    super.initState();
   }
 
-  void _removeUser(int index) {
-    setState(() {
-      users.removeAt(index);
+  // Função para ouvir mudanças em tempo real na subcoleção "profiles"
+  Stream<List<Map<String, dynamic>>> _getUsersStream() {
+    final User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      // Se o usuário não estiver logado, retorna um stream vazio
+      return Stream.value([]);
+    }
+
+    userId = user.uid;
+
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid) // Usar o UID do usuário logado
+        .collection('profiles') // Subcoleção "profiles"
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs
+          .map((doc) => doc.data() as Map<String, dynamic>)
+          .toList();
     });
   }
 
@@ -44,106 +60,121 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
       body: Column(
         children: [
           Expanded(
-            child: GridView.builder(
-              padding: const EdgeInsets.all(16.0),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10.0,
-                mainAxisSpacing: 10.0,
-              ),
-              itemCount: users.length + 1,
-              itemBuilder: (context, index) {
-                if (index < users.length) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              EnterPage(userName: users[index]),
-                        ),
-                      );
-                    },
-                    child: Column(
-                      children: [
-                        Container(
-                          width: 100.0,
-                          height: 100.0,
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 7, 83, 81),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child: const Center(
-                            child: Icon(
-                              Icons.person,
-                              color: Colors.white,
-                              size: 40,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 8.0),
-                        Text(
-                          users[index],
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                } else {
-                  return GestureDetector(
-                    onTap: () async {
-                      final result = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AddUserScreen()),
-                      );
-                      if (result != null && result is String) {
-                        _addUser(result);
-                      }
-                    },
-                    child: Column(
-                      children: [
-                        Container(
-                          width: 100.0,
-                          height: 100.0,
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child: Center(
-                            child: Icon(
-                              Icons.add,
-                              size: 30.0,
-                              color: Colors.grey[700],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 8.0),
-                        const Text(
-                          "Adicionar",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
+            child: StreamBuilder<List<Map<String, dynamic>>>(
+              stream: _getUsersStream(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
                 }
+
+                if (snapshot.hasError) {
+                  return Center(child: Text('Erro: ${snapshot.error}'));
+                }
+
+                final users = snapshot.data ?? [];
+
+                return GridView.builder(
+                  padding: const EdgeInsets.all(16.0),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10.0,
+                    mainAxisSpacing: 10.0,
+                  ),
+                  itemCount: users.length + 1, // +1 para o botão de adicionar
+                  itemBuilder: (context, index) {
+                    if (index < users.length) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  EnterPage(userName: users[index]['name']),
+                            ),
+                          );
+                        },
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 100.0,
+                              height: 100.0,
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 7, 83, 81),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              child: const Center(
+                                child: Icon(
+                                  Icons.person,
+                                  color: Colors.white,
+                                  size: 40,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            Text(
+                              users[index]['name'] ?? 'Nome não disponível',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      return GestureDetector(
+                        onTap: () async {
+                          final result = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddUserScreen()),
+                          );
+                          if (result != null && result is String) {
+                            // Chama _fetchUsers para atualizar a lista de usuários após adicionar um novo perfil
+                            // Aqui não é mais necessário, pois o StreamBuilder já está ouvindo as mudanças
+                          }
+                        },
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 100.0,
+                              height: 100.0,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.add,
+                                  size: 30.0,
+                                  color: Colors.grey[700],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            const Text(
+                              "Adicionar",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                  },
+                );
               },
             ),
           ),
-          // BOTÃO "CRIAR CONTA" expandido horizontalmente com altura de 60 e cores ajustadas
           Padding(
-            padding: const EdgeInsets.only(bottom: 20), // Eleva o botão
+            padding: const EdgeInsets.only(bottom: 20),
             child: SizedBox(
-              width: size.width, // Ocupa toda a largura da tela
-              height: 60, // Altura ajustada
+              width: size.width,
+              height: 60,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 50, 201, 199),
@@ -153,18 +184,28 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
                   ),
                 ),
                 onPressed: () async {
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => UserResponsible(users: users),
-                    ),
-                  );
-                  setState(() {});
+                  if (userId != null) {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UserResponsible(
+                          userId: userId!,
+                        ),
+                      ),
+                    );
+                    setState(() {});
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                            'Erro: Não foi possível recuperar o ID do usuário.'),
+                      ),
+                    );
+                  }
                 },
                 child: const Text(
                   'Entrar como responsável',
-                  style:
-                      TextStyle(fontSize: 18), // Aumentando o tamanho da fonte
+                  style: TextStyle(fontSize: 18),
                 ),
               ),
             ),
