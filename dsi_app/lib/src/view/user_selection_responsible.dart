@@ -163,7 +163,9 @@ class _UserResponsibleState extends State<UserResponsible> {
                             MaterialPageRoute(
                               builder: (context) => UserEdit(
                                 userName: users[index]['name'],
-                                onUpdate: (newName) async {
+                                birthDate:
+                                    formattedBirthDate, // Passando a data formatada
+                                onUpdate: (newName, newBirthDate) async {
                                   try {
                                     final userId = users[index]['id'];
                                     await FirebaseFirestore.instance
@@ -171,11 +173,17 @@ class _UserResponsibleState extends State<UserResponsible> {
                                         .doc(widget.userId)
                                         .collection('profiles')
                                         .doc(userId)
-                                        .update({'name': newName});
+                                        .update({
+                                      'name': newName,
+                                      'birthDate':
+                                          newBirthDate, // Atualizando a data de nascimento também
+                                    });
 
                                     setState(() {
                                       users[index]['name'] =
-                                          newName; // Atualiza localmente
+                                          newName; // Atualiza o nome localmente
+                                      users[index]['birthDate'] =
+                                          newBirthDate; // Atualiza a data localmente
                                     });
 
                                     ScaffoldMessenger.of(context).showSnackBar(
