@@ -78,6 +78,7 @@ class _UserEditState extends State<UserEdit> {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           'Editar Usuário',
           style: TextStyle(color: Colors.white),
@@ -92,33 +93,36 @@ class _UserEditState extends State<UserEdit> {
               alignment: Alignment.center,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // Campo de nome do usuário
-                    TextField(
-                      controller: _nameController,
-                      decoration: InputDecoration(
-                        labelText: 'Nome do Usuário',
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 30, right: 30),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Campo de nome do usuário
+                      TextField(
+                        controller: _nameController,
+                        decoration: InputDecoration(
+                          labelText: 'Nome do Usuário',
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 20), // Espaço entre os campos
+                      const SizedBox(height: 20), // Espaço entre os campos
 
-                    // Campo de data de nascimento
-                    GestureDetector(
-                      onTap: () => _selectBirthDate(context),
-                      child: AbsorbPointer(
-                        child: TextField(
-                          controller: _birthDateController,
-                          decoration: InputDecoration(
-                            labelText: 'Data de Nascimento',
-                            suffixIcon: Icon(Icons.calendar_today),
+                      // Campo de data de nascimento
+                      GestureDetector(
+                        onTap: () => _selectBirthDate(context),
+                        child: AbsorbPointer(
+                          child: TextField(
+                            controller: _birthDateController,
+                            decoration: InputDecoration(
+                              labelText: 'Data de Nascimento',
+                              suffixIcon: Icon(Icons.calendar_today),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 20), // Espaço abaixo dos campos
-                  ],
+                      const SizedBox(height: 20), // Espaço abaixo dos campos
+                    ],
+                  ),
                 ),
               ),
             ),
