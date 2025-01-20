@@ -63,6 +63,7 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 0, 163, 160),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: const Color.fromARGB(255, 0, 163, 160),
         centerTitle: true,
         title: const Text(
