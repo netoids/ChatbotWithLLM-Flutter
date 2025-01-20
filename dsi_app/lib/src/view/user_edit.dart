@@ -1,4 +1,3 @@
-//user_edit.dart
 import 'package:flutter/material.dart';
 
 class UserEdit extends StatefulWidget {
@@ -33,26 +32,50 @@ class _UserEditState extends State<UserEdit> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Editar Usuário'),
+        title: Text(
+          'Editar Usuário',
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: const Color.fromARGB(255, 0, 163, 160),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
               controller: _controller,
-              decoration: InputDecoration(labelText: 'Nome do Usuário'),
+              decoration: InputDecoration(
+                labelText: 'Nome do Usuário',
+              ),
             ),
-            SizedBox(height: 20.0),
-            ElevatedButton(
-              onPressed: _save,
-              child: Text('Salvar'),
+          ),
+          const Spacer(), // Empurra o botão para o final da tela
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: SizedBox(
+              width: size.width,
+              height: 60,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 50, 201, 199),
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.zero,
+                  ),
+                ),
+                onPressed: _save,
+                child: const Text(
+                  'Salvar',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

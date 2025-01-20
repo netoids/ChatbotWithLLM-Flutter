@@ -44,6 +44,21 @@ class MyApp extends StatelessWidget {
         primarySwatch: appPrimarySwatch,
         appBarTheme: AppBarTheme(
             elevation: 0, backgroundColor: AppColors.backgroundColor),
+        inputDecorationTheme: const InputDecorationTheme(
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: Color(0xFF00A3A0)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Color.fromARGB(255, 50, 201, 199), // Cor ao focar
+              width: 2.0,
+            ),
+          ),
+          floatingLabelStyle: TextStyle(
+            color: Color.fromARGB(255, 50, 201, 199), // Cor do texto flutuante
+            fontWeight: FontWeight.w500,
+          ),
+        ),
       ),
       initialRoute: LoginPage.routeName,
       routes: {

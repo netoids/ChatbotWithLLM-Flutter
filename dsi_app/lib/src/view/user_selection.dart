@@ -37,9 +37,14 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
         .collection('profiles') // Subcoleção "profiles"
         .snapshots()
         .map((snapshot) {
-      return snapshot.docs
+      final users = snapshot.docs
           .map((doc) => doc.data() as Map<String, dynamic>)
           .toList();
+      if (users.isEmpty) {
+        // Adiciona dinamicamente o perfil "Visitante" se não houver nenhum usuário
+        users.add({'name': 'Visitante'});
+      }
+      return users;
     });
   }
 
