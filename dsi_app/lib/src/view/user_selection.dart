@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dsi_app/src/view/login_page.dart';
 import 'package:dsi_app/src/view/user_chatbot_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +49,13 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
     });
   }
 
+  Future<void> _logout() async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => LoginPage()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -61,6 +69,21 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
           'Selecione o Perfil',
           style: TextStyle(color: Colors.white),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 15),
+            child: IconButton(
+              icon: const Icon(Icons.logout),
+              onPressed: () async {
+                await _logout();
+              },
+              tooltip: 'Sair',
+              style: ButtonStyle(
+                foregroundColor: WidgetStateProperty.all(Colors.white),
+              ),
+            ),
+          ),
+        ],
       ),
       body: Column(
         children: [

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart'; // Importando o pacote intl para formatação de datas
 import 'user_edit.dart';
 
 class UserResponsible extends StatefulWidget {
@@ -114,23 +115,14 @@ class _UserResponsibleState extends State<UserResponsible> {
                 String formattedBirthDate = '';
                 if (users[index]['birthDate'] != null) {
                   if (users[index]['birthDate'] is String) {
-                    // Se for uma string, converta manualmente
-                    try {
-                      final dateParts = users[index]['birthDate'].split('/');
-                      if (dateParts.length == 3) {
-                        final day = int.parse(dateParts[1]);
-                        final month = int.parse(dateParts[0]);
-                        final year = int.parse(dateParts[2]);
-                        formattedBirthDate = '$day/$month/$year';
-                      }
-                    } catch (e) {
-                      print('Erro ao converter a data: $e');
-                    }
+                    // Se já for uma string no formato correto (dd/MM/yyyy), use diretamente
+                    formattedBirthDate = users[index]['birthDate'];
                   } else if (users[index]['birthDate'] is Timestamp) {
                     // Se for um Timestamp, converta para DateTime
                     final birthDate = users[index]['birthDate'].toDate();
+                    // Formatar a data no formato brasileiro (dd/MM/yyyy)
                     formattedBirthDate =
-                        '${birthDate.day}/${birthDate.month}/${birthDate.year}';
+                        DateFormat('dd/MM/yyyy').format(birthDate);
                   }
                 }
 
@@ -209,12 +201,18 @@ class _UserResponsibleState extends State<UserResponsible> {
                         },
                         child: Row(
                           children: [
-                            Text(users[index]['name']),
-                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(users[index]['name']),
+                            ),
                             Text(
-                              formattedBirthDate,
+                              formattedBirthDate.isNotEmpty
+                                  ? formattedBirthDate
+                                  : 'Data inválida',
                               style: TextStyle(color: Colors.grey),
                             ),
+                            const SizedBox(
+                              width: 15,
+                            )
                           ],
                         ),
                       ),

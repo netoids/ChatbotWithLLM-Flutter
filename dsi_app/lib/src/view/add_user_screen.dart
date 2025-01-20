@@ -19,6 +19,38 @@ class _AddUserScreenState extends State<AddUserScreen> {
       initialDate: DateTime.now(), // Data inicial (hoje)
       firstDate: DateTime(1900), // Data mínima permitida
       lastDate: DateTime(2101), // Data máxima permitida
+      builder: (BuildContext context, Widget? child) {
+        // Customizando as cores do DatePicker
+        return Theme(
+          data: ThemeData.light().copyWith(
+            primaryColor:
+                const Color(0xFF00A3A0), // Cor do cabeçalho (barra de seleção)
+            colorScheme: ColorScheme.light(
+              primary: const Color(0xFF00A3A0), // Cor de destaque (seleção)
+              onPrimary:
+                  Colors.white, // Cor do texto nas áreas de fundo primário
+            ),
+            buttonTheme: ButtonThemeData(
+              textTheme: ButtonTextTheme.primary,
+              colorScheme: ColorScheme.light(primary: const Color(0xFF00A3A0)),
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: const Color(0xFF00A3A0), // Cor dos botões
+              ),
+            ),
+            inputDecorationTheme: InputDecorationTheme(
+              filled: true,
+              fillColor: Colors.white,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12.0),
+                borderSide: BorderSide.none,
+              ),
+            ),
+          ),
+          child: child ?? const SizedBox(),
+        );
+      },
     );
 
     if (pickedDate != null) {
