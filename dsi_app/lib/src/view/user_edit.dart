@@ -44,16 +44,22 @@ class _UserEditState extends State<UserEdit> {
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _controller,
-              decoration: InputDecoration(
-                labelText: 'Nome do Usuário',
+          // Centraliza o TextField na tela
+          Expanded(
+            flex: 1,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: TextField(
+                  controller: _controller,
+                  decoration: InputDecoration(
+                    labelText: 'Nome do Usuário',
+                  ),
+                ),
               ),
             ),
           ),
-          const Spacer(), // Empurra o botão para o final da tela
+          // Espaço entre o TextField e o botão
           Padding(
             padding: const EdgeInsets.only(bottom: 20),
             child: SizedBox(
