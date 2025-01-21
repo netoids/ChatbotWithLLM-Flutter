@@ -51,8 +51,11 @@ class _ForgotPasswordState extends State<Forgotpassword> {
 
                       // EMAIL
                       children: [
-                        const Text(
-                            'Informe seu email para que possamos enviar uma solicitação de recuperação'),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: const Text(
+                              'Informe seu email para que possamos enviar uma solicitação de recuperação'),
+                        ),
                         // EMAIL
                         CustomTextField(
                           hint: 'Digite o Email para recuperação',
