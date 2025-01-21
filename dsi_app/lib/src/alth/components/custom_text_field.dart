@@ -12,7 +12,7 @@ class CustomTextField extends StatefulWidget {
       required this.icon,
       required this.label,
       this.isSecret = false,
-      this.inputFormaters});
+      this.inputFormaters, required TextEditingController controller, required String? Function(dynamic value) validator});
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
