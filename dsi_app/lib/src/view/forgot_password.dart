@@ -1,5 +1,5 @@
+import 'package:dsi_app/src/shared/custom_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:dsi_app/src/alth/components/custom_text_field.dart';
 
 class Forgotpassword extends StatefulWidget {
   const Forgotpassword({super.key});
@@ -54,7 +54,8 @@ class _ForgotPasswordState extends State<Forgotpassword> {
                         const Text(
                             'Informe seu email para que possamos enviar uma solicitação de recuperação'),
                         // EMAIL
-                        const CustomTextField(
+                        CustomTextField(
+                          hint: 'Digite o Email para recuperação',
                           icon: Icons.email,
                           label: 'Email',
                         ),

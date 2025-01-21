@@ -1,5 +1,6 @@
 import 'package:dsi_app/src/services/autentication_service.dart';
 import 'package:dsi_app/src/shared/AppColors.dart';
+import 'package:dsi_app/src/shared/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:dsi_app/src/core/snackbar.dart';
 
@@ -56,37 +57,22 @@ class _LoginPageState extends State<LoginPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     // EMAIL FIELD
-                    TextFormField(
+                    CustomTextField(
                       controller: _emailController,
-                      decoration: InputDecoration(
-                        hintText: 'Digite seu email',
-                        labelText: 'Email',
-                        prefixIcon: Icon(Icons.email, color: Colors.grey),
-                        filled: true,
-                        fillColor: Colors.grey.shade100,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(18),
-                          borderSide: BorderSide.none,
-                        ),
-                      ),
+                      label: 'Email',
+                      icon: Icons.home,
+                      hint: 'Digite seu email',
                     ),
                     const SizedBox(height: 16),
                     // PASSWORD FIELD
-                    TextFormField(
+                    CustomTextField(
+                      hint: 'Digite sua senha',
+                      label: 'Senha',
+                      icon: Icons.lock,
                       controller: _passwordController,
-                      decoration: InputDecoration(
-                        hintText: 'Digite sua senha',
-                        labelText: 'Senha',
-                        prefixIcon: Icon(Icons.lock, color: Colors.grey),
-                        filled: true,
-                        fillColor: Colors.grey.shade100,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(18),
-                          borderSide: BorderSide.none,
-                        ),
-                      ),
-                      obscureText: true,
+                      isobscure: true,
                     ),
+
                     const SizedBox(height: 24),
                     // LOGIN BUTTON
                     SizedBox(

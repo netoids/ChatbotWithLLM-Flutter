@@ -1,3 +1,4 @@
+import 'package:dsi_app/src/shared/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:dsi_app/src/services/autentication_service.dart';
@@ -61,55 +62,40 @@ class Registration extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      const SizedBox(
-                          height: 100), // Espaçamento acima dos campos
-                      TextFormField(
-                        controller: _nameController,
-                        decoration: InputDecoration(
-                          hintText: 'Digite seu nome',
-                          labelText: 'Nome',
-                          prefixIcon:
-                              const Icon(Icons.person, color: Colors.grey),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide.none,
-                          ),
-                          filled: true,
-                          fillColor: const Color(0xFFEFEFEF),
+                      const SizedBox(height: 100),
+
+                      //Campo Nome
+
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16),
+                        child: CustomTextField(
+                          hint: 'Digite seu nome',
+                          label: 'Nome',
+                          icon: Icons.person,
+                          controller: _nameController,
                         ),
                       ),
-                      const SizedBox(height: 16),
-                      TextFormField(
-                        controller: _emailController,
-                        decoration: InputDecoration(
-                          hintText: 'Digite seu email',
-                          labelText: 'Email',
-                          prefixIcon:
-                              const Icon(Icons.email, color: Colors.grey),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide.none,
-                          ),
-                          filled: true,
-                          fillColor: const Color(0xFFEFEFEF),
+
+                      //Campo Email
+
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16),
+                        child: CustomTextField(
+                          hint: 'Digite seu email',
+                          label: 'Email',
+                          icon: Icons.email,
+                          controller: _emailController,
                         ),
                       ),
-                      const SizedBox(height: 16),
-                      TextFormField(
+
+                      //Campo Senha
+
+                      CustomTextField(
+                        hint: 'Digite sua senha',
+                        label: 'Senha',
+                        icon: Icons.lock,
                         controller: _passwordController,
-                        decoration: InputDecoration(
-                          hintText: 'Digite sua senha',
-                          labelText: 'Senha',
-                          prefixIcon:
-                              const Icon(Icons.lock, color: Colors.grey),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide.none,
-                          ),
-                          filled: true,
-                          fillColor: const Color(0xFFEFEFEF),
-                        ),
-                        obscureText: true,
+                        isobscure: true,
                       ),
                     ],
                   ),
