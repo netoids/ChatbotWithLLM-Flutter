@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // Importando o pacote intl para formatação de datas
@@ -7,7 +9,7 @@ class UserResponsible extends StatefulWidget {
   final String userId; // ID do usuário logado
   static const routeName = '/UserResponsible';
 
-  UserResponsible({required this.userId});
+  const UserResponsible({super.key, required this.userId});
 
   @override
   _UserResponsibleState createState() => _UserResponsibleState();
@@ -44,7 +46,6 @@ class _UserResponsibleState extends State<UserResponsible> {
         users = fetchedUsers; // Atualiza a lista local
       });
     } catch (e) {
-      print('Erro ao buscar usuários: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Erro ao carregar usuários: $e'),
@@ -79,7 +80,6 @@ class _UserResponsibleState extends State<UserResponsible> {
         users.removeAt(index); // Remove o usuário da lista local
       });
     } catch (e) {
-      print('Erro ao remover usuário: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Erro ao remover usuário: $e'),
@@ -216,7 +216,7 @@ class _UserResponsibleState extends State<UserResponsible> {
                               formattedBirthDate.isNotEmpty
                                   ? formattedBirthDate
                                   : 'Data inválida',
-                              style: TextStyle(color: Colors.grey),
+                              style: const TextStyle(color: Colors.grey),
                             ),
                             const SizedBox(
                               width: 15,

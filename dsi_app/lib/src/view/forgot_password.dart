@@ -51,9 +51,9 @@ class _ForgotPasswordState extends State<Forgotpassword> {
 
                       // EMAIL
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 20),
-                          child: const Text(
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                          child: Text(
                               'Informe seu email para que possamos enviar uma solicitação de recuperação'),
                         ),
                         // EMAIL
@@ -95,7 +95,7 @@ class _ForgotPasswordState extends State<Forgotpassword> {
                 top: 10,
                 child: SafeArea(
                   child: IconButton(
-                    color: Color.fromARGB(255, 50, 201, 199),
+                    color: const Color.fromARGB(255, 50, 201, 199),
                     onPressed: () {
                       Navigator.pushNamed(context, "/Login");
                     },

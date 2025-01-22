@@ -48,8 +48,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   });
                 },
                 icon: widget.visibility
-                    ? Icon(Icons.visibility)
-                    : Icon(Icons.visibility_off),
+                    ? const Icon(Icons.visibility)
+                    : const Icon(Icons.visibility_off),
               )
             : null,
         prefixIcon: Icon(widget.icon, color: Colors.grey),

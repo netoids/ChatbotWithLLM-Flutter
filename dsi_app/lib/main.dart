@@ -1,6 +1,6 @@
 import 'package:dsi_app/src/view/chatbot_history.dart';
 import 'package:flutter/material.dart';
-import 'package:dsi_app/src/shared/AppColors.dart';
+import 'package:dsi_app/src/shared/app_colors.dart';
 import 'package:dsi_app/src/view/login_page.dart';
 import 'package:dsi_app/src/view/register_page.dart';
 import 'package:dsi_app/src/view/user_chatbot_page.dart';

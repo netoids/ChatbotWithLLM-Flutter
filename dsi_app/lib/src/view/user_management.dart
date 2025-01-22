@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class UserManagement extends StatelessWidget {
   final String userName;
 
-  UserManagement({required this.userName});
+  const UserManagement({super.key, required this.userName});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class UserManagement extends StatelessWidget {
         title: Text('Gerenciar Usuário $userName'),
         backgroundColor: const Color.fromARGB(255, 0, 163, 160),
       ),
-      body: Center(
+      body: const Center(
         child: Text(
           'Teste',
           style: TextStyle(fontSize: 16.0),

@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // Importando o pacote intl para formatação de datas
 
@@ -6,8 +8,8 @@ class UserEdit extends StatefulWidget {
   final String birthDate; // Adicionando parâmetro para a data de nascimento
   final Function(String, String) onUpdate;
 
-  UserEdit(
-      {required this.userName,
+  const UserEdit(
+      {super.key, required this.userName,
       required this.birthDate,
       required this.onUpdate});
 
@@ -44,13 +46,13 @@ class _UserEditState extends State<UserEdit> {
         return Theme(
           data: ThemeData.light().copyWith(
             // Alterando para o ThemeData.light()
-            colorScheme: ColorScheme.light(
-              primary: const Color.fromARGB(
+            colorScheme: const ColorScheme.light(
+              primary: Color.fromARGB(
                   255, 0, 163, 160), // Cor do título e ícones
-              secondary: const Color.fromARGB(
+              secondary: Color.fromARGB(
                   255, 0, 163, 160), // Cor do ícone e botão
             ),
-            buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+            buttonTheme: const ButtonThemeData(textTheme: ButtonTextTheme.primary),
             // Mudando a cor de fundo para branco e ajustando o texto para preto
             dialogBackgroundColor: Colors.white,
           ),
@@ -79,7 +81,7 @@ class _UserEditState extends State<UserEdit> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Editar Usuário',
           style: TextStyle(color: Colors.white),
         ),
@@ -101,7 +103,7 @@ class _UserEditState extends State<UserEdit> {
                       // Campo de nome do usuário
                       TextField(
                         controller: _nameController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Nome do Usuário',
                         ),
                       ),
@@ -113,7 +115,7 @@ class _UserEditState extends State<UserEdit> {
                         child: AbsorbPointer(
                           child: TextField(
                             controller: _birthDateController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: 'Data de Nascimento',
                               suffixIcon: Icon(Icons.calendar_today),
                             ),
@@ -142,7 +144,7 @@ class _UserEditState extends State<UserEdit> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 50, 201, 199),
                     foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.zero,
                     ),
                   ),

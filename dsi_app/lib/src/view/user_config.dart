@@ -15,7 +15,7 @@ class _ConfigPageState extends State<ConfigPage> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Configuração'),
+          title: const Text('Configuração'),
         ),
         body: Container(
           color: Colors.green,
@@ -30,12 +30,12 @@ class _ConfigPageState extends State<ConfigPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, "/Login");
                   },
-                  child: Text('Voltar'),
+                  child: const Text('Voltar'),
                 ),
               ],
             ),

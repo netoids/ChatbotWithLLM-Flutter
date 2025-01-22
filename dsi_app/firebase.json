@@ -1,1 +1,71 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"lumi-2883e","appId":"1:964091017306:android:1e3812d264f2f157a9c063","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"lumi-2883e","configurations":{"android":"1:964091017306:android:1e3812d264f2f157a9c063","ios":"1:964091017306:ios:a5dc50b09ff80507a9c063","web":"1:964091017306:web:e9e94b6daa83c1c0a9c063","windows":"1:964091017306:web:ebf0cc723731becca9c063"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "lumi-2883e",
+          "appId": "1:964091017306:android:1e3812d264f2f157a9c063",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "lumi-2883e",
+          "configurations": {
+            "android": "1:964091017306:android:1e3812d264f2f157a9c063",
+            "ios": "1:964091017306:ios:a5dc50b09ff80507a9c063",
+            "web": "1:964091017306:web:e9e94b6daa83c1c0a9c063",
+            "windows": "1:964091017306:web:ebf0cc723731becca9c063"
+          }
+        }
+      }
+    }
+  },
+  "emulators": {
+    "dataconnect": {
+      "dataDir": "dataconnect/.dataconnect/pgliteData"
+    }
+  },
+  "dataconnect": {
+    "source": "dataconnect"
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run lint",
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ]
+    },
+    {
+      "source": "dsi_app",
+      "codebase": "dsi_app",
+      "ignore": [
+        "venv",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ]
+    }
+  ],
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  },
+  "storage": {
+    "rules": "storage.rules"
+  },
+  "database": {
+    "rules": "database.rules.json"
+  }
+}

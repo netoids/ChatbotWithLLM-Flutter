@@ -1,5 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:dsi_app/src/services/autentication_service.dart';
-import 'package:dsi_app/src/shared/AppColors.dart';
+import 'package:dsi_app/src/shared/app_colors.dart';
 import 'package:dsi_app/src/shared/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:dsi_app/src/core/snackbar.dart';
@@ -24,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
       body: Column(
         children: [
           // LOGO
-          Expanded(
+          const Expanded(
             flex: 2,
             child: Center(
               child: Text(
@@ -32,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
                 style: TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.bold,
-                  color: const Color.fromARGB(255, 50, 201, 199),
+                  color: Color.fromARGB(255, 50, 201, 199),
                 ),
               ),
             ),
@@ -43,12 +45,12 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 40),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(45)),
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(45)),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.shade300,
                     blurRadius: 20,
-                    offset: Offset(0, -5),
+                    offset: const Offset(0, -5),
                   ),
                 ],
               ),
@@ -148,16 +150,16 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.popAndPushNamed(context, '/Registration');
                         },
                         style: OutlinedButton.styleFrom(
-                          side: BorderSide(
-                              color: const Color.fromARGB(255, 50, 201, 199)),
+                          side: const BorderSide(
+                              color: Color.fromARGB(255, 50, 201, 199)),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(28)),
                         ),
-                        child: Text(
+                        child: const Text(
                           "Criar Conta",
                           style: TextStyle(
                             fontSize: 18,
-                            color: const Color.fromARGB(255, 50, 201, 199),
+                            color: Color.fromARGB(255, 50, 201, 199),
                           ),
                         ),
                       ),

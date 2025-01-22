@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:dsi_app/src/shared/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -147,7 +149,7 @@ class Registration extends StatelessWidget {
             top: 10,
             child: SafeArea(
               child: IconButton(
-                color: Color.fromARGB(255, 50, 201, 199),
+                color: const Color.fromARGB(255, 50, 201, 199),
                 onPressed: () {
                   Navigator.pushNamed(context, "/Login");
                 },

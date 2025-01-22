@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dsi_app/src/view/login_page.dart';
 import 'package:dsi_app/src/view/user_chatbot_page.dart';
@@ -39,7 +41,7 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
         .snapshots()
         .map((snapshot) {
       final users = snapshot.docs
-          .map((doc) => doc.data() as Map<String, dynamic>)
+          .map((doc) => doc.data())
           .toList();
       if (users.isEmpty) {
         // Adiciona dinamicamente o perfil "Visitante" se não houver nenhum usuário
@@ -52,7 +54,7 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
   Future<void> _logout() async {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => LoginPage()),
+      MaterialPageRoute(builder: (context) => const LoginPage()),
     );
   }
 
@@ -157,7 +159,7 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
                           final result = await Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AddUserScreen()),
+                                builder: (context) => const AddUserScreen()),
                           );
                           if (result != null && result is String) {
                             // Chama _fetchUsers para atualizar a lista de usuários após adicionar um novo perfil
@@ -208,7 +210,7 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 50, 201, 199),
                   foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
+                  shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.zero,
                   ),
                 ),

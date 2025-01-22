@@ -1,8 +1,12 @@
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AddUserScreen extends StatefulWidget {
+  const AddUserScreen({super.key});
+
   @override
   _AddUserScreenState createState() => _AddUserScreenState();
 }
@@ -25,14 +29,14 @@ class _AddUserScreenState extends State<AddUserScreen> {
           data: ThemeData.light().copyWith(
             primaryColor:
                 const Color(0xFF00A3A0), // Cor do cabeçalho (barra de seleção)
-            colorScheme: ColorScheme.light(
-              primary: const Color(0xFF00A3A0), // Cor de destaque (seleção)
+            colorScheme: const ColorScheme.light(
+              primary: Color(0xFF00A3A0), // Cor de destaque (seleção)
               onPrimary:
                   Colors.white, // Cor do texto nas áreas de fundo primário
             ),
-            buttonTheme: ButtonThemeData(
+            buttonTheme: const ButtonThemeData(
               textTheme: ButtonTextTheme.primary,
-              colorScheme: ColorScheme.light(primary: const Color(0xFF00A3A0)),
+              colorScheme: ColorScheme.light(primary: Color(0xFF00A3A0)),
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(

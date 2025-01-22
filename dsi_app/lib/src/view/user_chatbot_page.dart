@@ -13,7 +13,7 @@ class EnterPage extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<EnterPage> {
-  TextEditingController _userInput =TextEditingController();
+  final TextEditingController _userInput =TextEditingController();
 
   static const apiKey = "AIzaSyCDgkCO2MLuhvmjhh7cEmlJlGTqDUnO0xI";
 
@@ -73,19 +73,19 @@ class _ChatScreenState extends State<EnterPage> {
                   Expanded(
                     flex: 15,
                     child: TextFormField(
-                      style: TextStyle(color: Colors.black),
+                      style: const TextStyle(color: Colors.black),
                       controller: _userInput,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
-                        label: Text('Enter Your Message')
+                        label: const Text('Enter Your Message')
                       ),
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   IconButton(
-                    padding: EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(12),
                       iconSize: 30,
                       style: ButtonStyle(
                         backgroundColor: WidgetStateProperty.all(const Color.fromARGB(255, 0, 163, 160)),
@@ -95,7 +95,7 @@ class _ChatScreenState extends State<EnterPage> {
                       onPressed: (){
                       sendMessage();
                       },
-                      icon: Icon(Icons.send))
+                      icon: const Icon(Icons.send))
                 ],
               ),
             )
@@ -132,18 +132,18 @@ class Messages extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(15),
-      margin: EdgeInsets.symmetric(vertical: 15).copyWith(
+      padding: const EdgeInsets.all(15),
+      margin: const EdgeInsets.symmetric(vertical: 15).copyWith(
         left: isUser ? 100:10,
         right: isUser ? 10: 100
       ),
       decoration: BoxDecoration(
         color: isUser ? const Color.fromARGB(255, 0, 163, 160) : Colors.grey.shade400,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10),
-          bottomLeft: isUser ? Radius.circular(10): Radius.zero,
-          topRight: Radius.circular(10),
-          bottomRight: isUser ? Radius.zero : Radius.circular(10)
+          topLeft: const Radius.circular(10),
+          bottomLeft: isUser ? const Radius.circular(10): Radius.zero,
+          topRight: const Radius.circular(10),
+          bottomRight: isUser ? Radius.zero : const Radius.circular(10)
         )
       ),
       child: Column(
