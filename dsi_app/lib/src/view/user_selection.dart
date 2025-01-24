@@ -40,9 +40,7 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
         .collection('profiles') // Subcoleção "profiles"
         .snapshots()
         .map((snapshot) {
-      final users = snapshot.docs
-          .map((doc) => doc.data())
-          .toList();
+      final users = snapshot.docs.map((doc) => doc.data()).toList();
       if (users.isEmpty) {
         // Adiciona dinamicamente o perfil "Visitante" se não houver nenhum usuário
         users.add({'name': 'Visitante'});
@@ -80,7 +78,7 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
               onPressed: () async {
                 await _logout();
               },
-              tooltip: 'Sair',
+              tooltip: 'Desconectar',
               style: ButtonStyle(
                 foregroundColor: WidgetStateProperty.all(Colors.white),
               ),

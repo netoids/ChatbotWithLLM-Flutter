@@ -60,6 +60,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           borderSide: BorderSide.none,
         ),
       ),
+      cursorColor: Color.fromARGB(255, 50, 201, 199),
     );
   }
 }

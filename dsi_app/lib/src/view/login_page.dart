@@ -45,7 +45,8 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 40),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(45)),
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(45)),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.shade300,
@@ -97,7 +98,8 @@ class _LoginPageState extends State<LoginPage> {
                             if (error != null) {
                               showSnackBar(context: context, message: error);
                             } else {
-                              Navigator.pushNamed(context, "/UserSelection");
+                              Navigator.popAndPushNamed(
+                                  context, "/UserSelection");
                             }
                           });
                         },
@@ -168,7 +170,7 @@ class _LoginPageState extends State<LoginPage> {
                     // FORGOT PASSWORD BUTTON
                     TextButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/ForgotPassword');
+                        Navigator.popAndPushNamed(context, '/ForgotPassword');
                       },
                       child: Text(
                         'Esqueceu a senha?',
