@@ -16,10 +16,10 @@ class _ChatHistoryState extends State<ChatHistory> {
       appBar: AppBar(
         title: const Text('Histórico',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-        backgroundColor: const Color.fromARGB(255, 3, 133, 150),
+        backgroundColor: const Color.fromARGB(255, 0, 163, 160),
         leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Navigator.pop(context, "/Config")),
+            onPressed: () => Navigator.popAndPushNamed(context, "/EnterPage")),
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(8),
