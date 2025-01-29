@@ -41,6 +41,8 @@ class _ChatScreenState extends State<EnterPage> {
       _messages.add(Message(
           isUser: false, message: response.text ?? "", date: DateTime.now()));
     });
+    final listMessages = List.from(_messages);
+    
   }
 
   @override
@@ -53,6 +55,22 @@ class _ChatScreenState extends State<EnterPage> {
           'LUMI',
           style: TextStyle(color: Colors.white),
         ),
+        leading: IconButton(
+          icon: const Icon(Icons.list_rounded),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.popAndPushNamed(context,'/ChatHistory');
+          },
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
       ),
       body: Container(
         decoration: const BoxDecoration(),
@@ -85,7 +103,7 @@ class _ChatScreenState extends State<EnterPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
-                        label: const Text('Enter Your Message'),
+                        label: const Text('Digite a sua mensagem'),
                       ),
                     ),
                   ),
