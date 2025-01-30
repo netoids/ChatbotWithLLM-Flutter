@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class EnterPage extends StatefulWidget {
   final String userName;
@@ -15,9 +16,16 @@ class EnterPage extends StatefulWidget {
 class _ChatScreenState extends State<EnterPage> {
   final TextEditingController _userInput = TextEditingController();
 
-  static const apiKey = "AIzaSyCDgkCO2MLuhvmjhh7cEmlJlGTqDUnO0xI";
+  final apiKey = dotenv.env['API_KEY'];
 
-  final model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
+  late final GenerativeModel model;
+
+  @override
+  void initState() {
+    super.initState();
+    final apiKey = dotenv.env['API_KEY']!;
+    model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
+  }
 
   final List<Message> _messages = [];
 
@@ -41,7 +49,6 @@ class _ChatScreenState extends State<EnterPage> {
       _messages.add(Message(
           isUser: false, message: response.text ?? "", date: DateTime.now()));
     });
-    final listMessages = List.from(_messages);
     
   }
 
