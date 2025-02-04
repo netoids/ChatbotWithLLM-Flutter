@@ -10,6 +10,7 @@ import 'package:dsi_app/src/view/user_selection.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:dsi_app/src/view/chat_detail.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -70,6 +71,7 @@ class MyApp extends StatelessWidget {
         ConfigPage.routeName: (context) => const ConfigPage(),
         ChatHistory.routeName: (context) => const ChatHistory(),
         UserSelectionScreen.routeName: (context) => const UserSelectionScreen(),
+        ChatDetail.routeName: (context) => const ChatDetail(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == EnterPage.routeName) {
