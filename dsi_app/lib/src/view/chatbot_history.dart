@@ -18,8 +18,10 @@ class ChatHistory extends StatelessWidget {
         body: Center(child: Text('Usuário não autenticado.')),
       );
     }
-final arguments = ModalRoute.of(context)?.settings.arguments;
-final String profileName = arguments is String ? arguments : 'defaultProfile'; // ajuste conforme sua lógica
+    
+    // Recupera o nome do perfil passado como argumento
+    final arguments = ModalRoute.of(context)?.settings.arguments;
+    final String profileName = arguments is String ? arguments : 'defaultProfile';
 
     final conversationsStream = FirebaseFirestore.instance
         .collection('users')
@@ -32,7 +34,10 @@ final String profileName = arguments is String ? arguments : 'defaultProfile'; /
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Histórico de Conversas', style: TextStyle(color: Colors.white),),
+        title: const Text(
+          'Histórico de Conversas',
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: const Color.fromARGB(255, 0, 163, 160),
       ),
       body: StreamBuilder<QuerySnapshot>(
@@ -58,11 +63,15 @@ final String profileName = arguments is String ? arguments : 'defaultProfile'; /
                 title: Text('Conversa iniciada em: $formattedDate'),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {
-                  // Navega para a tela de detalhes da conversa, passando os dados
+                  // Ao selecionar a conversa, envia os dados necessários para continuar a conversa
                   Navigator.pushNamed(
                     context,
                     ChatDetail.routeName,
-                    arguments: conversation,
+                    arguments: {
+                      'conversation': conversation,
+                      'conversationId': docs[index].id,
+                      'profileName': profileName,
+                    },
                   );
                 },
               );
