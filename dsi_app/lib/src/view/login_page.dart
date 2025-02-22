@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
             flex: 2,
             child: Center(
               child: Text(
-                "Logo",
+                "Lumi",
                 style: TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.bold,
