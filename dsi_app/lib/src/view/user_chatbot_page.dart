@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import '../models/messages.dart'; // importe os modelos Message e Conversation
+import '../models/messages.dart'; // Certifique-se de que Message e Conversation possuem os métodos toMap/fromMap
 
 class EnterPage extends StatefulWidget {
   final String userName;
@@ -32,27 +32,37 @@ class _ChatScreenState extends State<EnterPage> {
   }
 
   Future<void> sendMessage() async {
-    final messageText = _userInput.text;
+    final messageText = _userInput.text.trim();
     if (messageText.isEmpty) return;
 
+    // Adiciona a mensagem do usuário na conversa localmente
     setState(() {
       _currentMessages.add(
         Message(isUser: true, message: messageText, date: DateTime.now()),
       );
     });
-
     _userInput.clear();
 
-    final content = [Content.text(messageText)];
-    final response = await model.generateContent(content);
+    // Constrói o contexto da conversa a partir do histórico de mensagens
+    // Prefixa cada mensagem com "Usuário:" ou "Assistente:" para indicar o papel
+    List<Content> conversationContext = _currentMessages.map((msg) {
+      final role = msg.isUser ? "Usuário:" : "Assistente:";
+      return Content.text("$role ${msg.message}");
+    }).toList();
 
+    // Opcional: limite o contexto às últimas 10 mensagens para não exceder os limites de tokens
+    if (conversationContext.length > 10) {
+      conversationContext = conversationContext.sublist(conversationContext.length - 10);
+    }
+
+    // Envia o contexto completo para o Gemini para manter o fluxo da conversa
+    final response = await model.generateContent(conversationContext);
+    final geminiResponse = response.text ?? "";
+
+    // Adiciona a resposta do Gemini à conversa localmente
     setState(() {
       _currentMessages.add(
-        Message(
-          isUser: false,
-          message: response.text ?? "",
-          date: DateTime.now(),
-        ),
+        Message(isUser: false, message: geminiResponse, date: DateTime.now()),
       );
     });
   }
@@ -98,7 +108,10 @@ class _ChatScreenState extends State<EnterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('LUMI', style: TextStyle(color: Colors.white),),
+        title: const Text(
+          'LUMI',
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: const Color.fromARGB(255, 0, 163, 160),
         centerTitle: true,
         leading: IconButton(
@@ -108,7 +121,7 @@ class _ChatScreenState extends State<EnterPage> {
             // Opcional: finalize a conversa atual antes de navegar para o histórico
             await finishConversation();
             // Navega para o histórico de conversas (a tela de histórico pode buscar os dados do Firestore)
-            Navigator.pushNamed(context, '/ChatHistory', arguments: widget.userName,);
+            Navigator.pushNamed(context, '/ChatHistory', arguments: widget.userName);
           },
         ),
         actions: [

@@ -43,44 +43,56 @@ class _ChatDetailState extends State<ChatDetail> {
   }
 
   Future<void> sendMessage() async {
-    final messageText = _messageController.text.trim();
-    if (messageText.isEmpty) return;
+  final messageText = _messageController.text.trim();
+  if (messageText.isEmpty) return;
 
-    // Adiciona a mensagem do usuário na conversa localmente
-    setState(() {
-      conversation.messages.add(
-        Message(isUser: true, message: messageText, date: DateTime.now()),
-      );
-    });
-    _messageController.clear();
+  // Adiciona a mensagem do usuário na conversa localmente
+  setState(() {
+    conversation.messages.add(
+      Message(isUser: true, message: messageText, date: DateTime.now()),
+    );
+  });
+  _messageController.clear();
 
-    // Envia o texto para o Gemini e aguarda a resposta
-    final content = [Content.text(messageText)];
-    final response = await model.generateContent(content);
-    final geminiResponse = response.text ?? "";
+  // Constrói o contexto da conversa com as mensagens anteriores
+  // Prefixa cada mensagem para identificar o papel (Usuário ou Assistente)
+  List<Content> conversationContext = conversation.messages.map((m) {
+    final role = m.isUser ? "Usuário:" : "Assistente:";
+    return Content.text("$role ${m.message}");
+  }).toList();
 
-    // Adiciona a resposta do Gemini na conversa localmente
-    setState(() {
-      conversation.messages.add(
-        Message(isUser: false, message: geminiResponse, date: DateTime.now()),
-      );
-    });
-
-    // Atualiza o documento da conversa no Firestore com a lista atualizada de mensagens
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      final conversationDoc = FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .collection('profiles')
-          .doc(profileName)
-          .collection('conversations')
-          .doc(conversationId);
-
-      final messagesMap = conversation.messages.map((m) => m.toMap()).toList();
-      await conversationDoc.update({'messages': messagesMap});
-    }
+  // Opcional: Limita o tamanho do contexto (por exemplo, últimas 10 mensagens)
+  if (conversationContext.length > 10) {
+    conversationContext = conversationContext.sublist(conversationContext.length - 10);
   }
+
+  // Envia o contexto completo para o Gemini para manter o fluxo da conversa
+  final response = await model.generateContent(conversationContext);
+  final geminiResponse = response.text ?? "";
+
+  // Adiciona a resposta do Gemini na conversa localmente
+  setState(() {
+    conversation.messages.add(
+      Message(isUser: false, message: geminiResponse, date: DateTime.now()),
+    );
+  });
+
+  // Atualiza o documento da conversa no Firestore com a lista atualizada de mensagens
+  final user = FirebaseAuth.instance.currentUser;
+  if (user != null) {
+    final conversationDoc = FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection('profiles')
+        .doc(profileName)
+        .collection('conversations')
+        .doc(conversationId);
+
+    final messagesMap = conversation.messages.map((m) => m.toMap()).toList();
+    await conversationDoc.update({'messages': messagesMap});
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
