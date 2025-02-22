@@ -1,0 +1,2 @@
+C:/Users/Naldo/Documents/GitHub/ChatbotWithLLM-Flutter/dsi_app/android/app/.cxx/Debug/5ia143o4/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/Naldo/Documents/GitHub/ChatbotWithLLM-Flutter/dsi_app/android/app/.cxx/Debug/5ia143o4/x86_64/CMakeFiles/rebuild_cache.dir
