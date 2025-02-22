@@ -56,24 +56,57 @@ class ChatHistory extends StatelessWidget {
           return ListView.builder(
             itemCount: docs.length,
             itemBuilder: (context, index) {
-              final data = docs[index].data() as Map<String, dynamic>;
+              final doc = docs[index];
+              final data = doc.data() as Map<String, dynamic>;
               final conversation = Conversation.fromMap(data);
-              final formattedDate = DateFormat('dd/MM/yyyy HH:mm').format(conversation.startDate);
-              return ListTile(
-                title: Text('Conversa iniciada em: $formattedDate'),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () {
-                  // Ao selecionar a conversa, envia os dados necessários para continuar a conversa
-                  Navigator.pushNamed(
-                    context,
-                    ChatDetail.routeName,
-                    arguments: {
-                      'conversation': conversation,
-                      'conversationId': docs[index].id,
-                      'profileName': profileName,
-                    },
-                  );
+              final formattedDate =
+                  DateFormat('dd/MM/yyyy HH:mm').format(conversation.startDate);
+              return Dismissible(
+                key: Key(doc.id),
+                direction: DismissDirection.endToStart,
+                background: Container(
+                  color: Colors.red,
+                  alignment: Alignment.centerRight,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: const Icon(Icons.delete, color: Colors.white),
+                ),
+                onDismissed: (direction) async {
+                  // Remove a conversa do Firestore
+                  try {
+                    await FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(user.uid)
+                        .collection('profiles')
+                        .doc(profileName)
+                        .collection('conversations')
+                        .doc(doc.id)
+                        .delete();
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Conversa deletada')),
+                    );
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Erro ao deletar conversa: $e')),
+                    );
+                  }
                 },
+                child: ListTile(
+                  title: Text('Conversa iniciada em: $formattedDate'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () {
+                    // Navega para a tela de detalhes da conversa, passando os dados necessários
+                    Navigator.pushNamed(
+                      context,
+                      ChatDetail.routeName,
+                      arguments: {
+                        'conversation': conversation,
+                        'conversationId': doc.id,
+                        'profileName': profileName,
+                      },
+                    );
+                  },
+                ),
               );
             },
           );
