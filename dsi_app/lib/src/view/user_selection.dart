@@ -78,7 +78,7 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
               },
               tooltip: 'Desconectar',
               style: ButtonStyle(
-                foregroundColor: WidgetStateProperty.all(Colors.white),
+                foregroundColor: MaterialStateProperty.all(Colors.white),
               ),
             ),
           ),
@@ -162,14 +162,17 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
                                               255, 7, 83, 81),
                                           borderRadius:
                                               BorderRadius.circular(8.0),
-                                        ),
-                                        child: const Center(
-                                          child: Icon(
-                                            Icons.person,
-                                            color: Colors.white,
-                                            size: 40,
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                              users[index]['imageUrl'] ??
+                                                  'lib/src/assets/images/image1.jpeg',
+                                            ),
+                                            fit: BoxFit.cover,
                                           ),
                                         ),
+                                        child: users[index]['imageUrl'] == null
+                                            ? const Center()
+                                            : null,
                                       ),
                                       const SizedBox(height: 8.0),
                                       Text(
