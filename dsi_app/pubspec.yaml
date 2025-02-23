@@ -31,7 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
   mask_text_input_formatter: ^2.4.0
-  image_picker: ^0.8.7+4 # Use a versão mais recente disponível
+  image_picker: ^0.8.7+4
+  google_maps_flutter: ^2.10.0 # Use a versão mais recente disponível
 
 
   # The following adds the Cupertino Icons font to your application.

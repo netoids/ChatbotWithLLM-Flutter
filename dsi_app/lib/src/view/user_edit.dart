@@ -9,7 +9,8 @@ class UserEdit extends StatefulWidget {
   final Function(String, String) onUpdate;
 
   const UserEdit(
-      {super.key, required this.userName,
+      {super.key,
+      required this.userName,
       required this.birthDate,
       required this.onUpdate});
 
@@ -47,12 +48,13 @@ class _UserEditState extends State<UserEdit> {
           data: ThemeData.light().copyWith(
             // Alterando para o ThemeData.light()
             colorScheme: const ColorScheme.light(
-              primary: Color.fromARGB(
-                  255, 0, 163, 160), // Cor do título e ícones
-              secondary: Color.fromARGB(
-                  255, 0, 163, 160), // Cor do ícone e botão
+              primary:
+                  Color.fromARGB(255, 0, 163, 160), // Cor do título e ícones
+              secondary:
+                  Color.fromARGB(255, 0, 163, 160), // Cor do ícone e botão
             ),
-            buttonTheme: const ButtonThemeData(textTheme: ButtonTextTheme.primary),
+            buttonTheme:
+                const ButtonThemeData(textTheme: ButtonTextTheme.primary),
             // Mudando a cor de fundo para branco e ajustando o texto para preto
             dialogBackgroundColor: Colors.white,
           ),
