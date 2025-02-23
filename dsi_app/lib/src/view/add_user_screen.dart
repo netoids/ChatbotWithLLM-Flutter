@@ -54,7 +54,11 @@ class _AddUserScreenState extends State<AddUserScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const SizedBox(height: 200),
-          const Text('Escolha um avatar:', textAlign: TextAlign.center),
+          const Text(
+            'Escolha um avatar',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+          ),
           const SizedBox(height: 30),
           Center(
             child: Wrap(
