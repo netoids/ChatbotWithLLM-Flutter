@@ -41,7 +41,10 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
         .map((snapshot) {
       final users = snapshot.docs.map((doc) => doc.data()).toList();
       if (users.isEmpty) {
-        users.add({'name': 'Visitante'});
+        users.add({
+          'name': 'Visitante',
+          'image': null
+        }); // Mudança aqui para usar 'image'
       }
       return users;
     });
@@ -124,6 +127,9 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
                     }).toList() ??
                     [];
 
+                // Adicione esta linha para verificar a lista de usuários
+                print('Usuários: $users');
+
                 return Column(
                   children: [
                     Expanded(
@@ -158,19 +164,18 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
                                         width: 100.0,
                                         height: 100.0,
                                         decoration: BoxDecoration(
-                                          color: const Color.fromARGB(
-                                              255, 7, 83, 81),
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                           image: DecorationImage(
-                                            image: NetworkImage(
-                                              users[index]['imageUrl'] ??
-                                                  'lib/src/assets/images/image1.jpeg',
-                                            ),
+                                            image: users[index]['image'] != null
+                                                ? NetworkImage(users[index][
+                                                    'image']) // Use 'image' aqui
+                                                : const AssetImage(
+                                                    'lib/src/assets/images/image1.jpeg'),
                                             fit: BoxFit.cover,
                                           ),
                                         ),
-                                        child: users[index]['imageUrl'] == null
+                                        child: users[index]['image'] == null
                                             ? const Center()
                                             : null,
                                       ),
