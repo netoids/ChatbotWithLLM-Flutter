@@ -42,6 +42,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xFFF3F4F6),
       appBar: AppBar(
         centerTitle: true,
