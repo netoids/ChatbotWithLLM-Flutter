@@ -1,5 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
+// models.dart
 class Message {
   final bool isUser;
   final String message;
@@ -11,8 +10,7 @@ class Message {
     return {
       'isUser': isUser,
       'message': message,
-      // Você pode também armazenar as datas como Timestamp se desejar
-      'date': Timestamp.fromDate(date),
+      'date': date.toIso8601String(),
     };
   }
 
@@ -20,9 +18,7 @@ class Message {
     return Message(
       isUser: map['isUser'],
       message: map['message'],
-      date: map['date'] is Timestamp
-          ? (map['date'] as Timestamp).toDate()
-          : DateTime.parse(map['date']),
+      date: DateTime.parse(map['date']),
     );
   }
 }
@@ -35,17 +31,14 @@ class Conversation {
 
   Map<String, dynamic> toMap() {
     return {
-      // Armazena a data como Timestamp para facilitar os filtros
-      'startDate': Timestamp.fromDate(startDate),
+      'startDate': startDate.toIso8601String(),
       'messages': messages.map((m) => m.toMap()).toList(),
     };
   }
 
   factory Conversation.fromMap(Map<String, dynamic> map) {
     return Conversation(
-      startDate: map['startDate'] is Timestamp
-          ? (map['startDate'] as Timestamp).toDate()
-          : DateTime.parse(map['startDate']),
+      startDate: DateTime.parse(map['startDate']),
       messages: List<Message>.from(
         (map['messages'] as List<dynamic>).map((item) => Message.fromMap(item)),
       ),
