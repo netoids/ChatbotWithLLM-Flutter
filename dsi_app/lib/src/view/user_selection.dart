@@ -171,7 +171,7 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
                                                 ? AssetImage(users[index][
                                                     'image']) // Use 'image' aqui
                                                 : const AssetImage(
-                                                    'lib/assets/images/image1.jpeg'),
+                                                    'lib/src/assets/images/image1.jpeg'),
                                             fit: BoxFit.cover,
                                           ),
                                         ),
