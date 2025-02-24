@@ -198,13 +198,21 @@ class _UserResponsibleState extends State<UserResponsible> {
                                           'birthDate': newBirthDate,
                                           'image':
                                               newUserImage, // Adicione esta linha
-                                          'location': newLocation,
+                                          'location': {
+                                            'latitude': newLocation!.latitude,
+                                            'longitude': newLocation.longitude,
+                                          },
                                         });
 
                                         setState(() {
                                           users[index]['name'] = newName;
                                           users[index]['birthDate'] =
                                               newBirthDate;
+                                          users[index]['location']['latitude'] =
+                                              newLocation.latitude;
+                                          users[index]['location']
+                                                  ['longitude'] =
+                                              newLocation.longitude;
                                         });
 
                                         ScaffoldMessenger.of(context)
