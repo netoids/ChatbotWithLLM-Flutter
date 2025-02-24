@@ -7,8 +7,8 @@ class UserEdit extends StatefulWidget {
   final String userName;
   final String birthDate;
   final String userImage;
-  final LatLng? userLocation; // Adicionando localização inicial
-  final Function(String, String, String, LatLng?) onUpdate; // Atualização
+  final LatLng? userLocation;
+  final Function(String, String, String, LatLng?) onUpdate;
 
   const UserEdit({
     super.key,
@@ -44,8 +44,7 @@ class _UserEditState extends State<UserEdit> {
     _birthDateController = TextEditingController(text: widget.birthDate);
     _selectedAssetImage =
         _predefinedImages.isNotEmpty ? _predefinedImages[0] : null;
-    _selectedLocation =
-        widget.userLocation; // Preenchendo com a localização atual
+    _selectedLocation = widget.userLocation;
   }
 
   @override
@@ -61,6 +60,25 @@ class _UserEditState extends State<UserEdit> {
       initialDate: DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData(
+            colorScheme: ColorScheme.light(
+              primary: Color(0xFF00A3A0), // Cor principal (mesma do AppBar)
+              onPrimary: Colors.white, // Cor do texto nos botões
+              surface: Colors.white, // Fundo do calendário
+              onSurface: Colors.black, // Cor do texto
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor:
+                    Color(0xFF00A3A0), // Cor dos botões "CANCELAR" e "OK"
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
 
     if (selectedDate != null) {
@@ -74,16 +92,12 @@ class _UserEditState extends State<UserEdit> {
   void _save() {
     String imagePath =
         _selectedFileImage?.path ?? _selectedAssetImage ?? widget.userImage;
-
-    // Chama o método de atualização passando nome, data, imagem e localização
     widget.onUpdate(
       _nameController.text,
       _birthDateController.text,
       imagePath,
-      _selectedLocation, // Passa a localização selecionada
+      _selectedLocation,
     );
-
-    // Fecha a tela de edição
     Navigator.pop(context);
   }
 
@@ -92,19 +106,17 @@ class _UserEditState extends State<UserEdit> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          'Editar Usuário',
-          style: TextStyle(color: Colors.white),
-        ),
+        title:
+            const Text('Editar Usuário', style: TextStyle(color: Colors.white)),
         backgroundColor: const Color.fromARGB(255, 0, 163, 160),
       ),
       body: Stack(
         children: [
           Positioned.fill(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80),
+            child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -142,50 +154,58 @@ class _UserEditState extends State<UserEdit> {
                     }).toList(),
                   ),
                   const SizedBox(height: 20),
-                  TextField(
-                    controller: _nameController,
-                    decoration:
-                        const InputDecoration(labelText: 'Nome do Usuário'),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    child: TextField(
+                      controller: _nameController,
+                      decoration:
+                          const InputDecoration(labelText: 'Nome do Usuário'),
+                    ),
                   ),
                   const SizedBox(height: 20),
-                  GestureDetector(
-                    onTap: () => _selectBirthDate(context),
-                    child: AbsorbPointer(
-                      child: TextField(
-                        controller: _birthDateController,
-                        decoration: const InputDecoration(
-                          labelText: 'Data de Nascimento',
-                          suffixIcon: Icon(Icons.calendar_today),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    child: GestureDetector(
+                      onTap: () => _selectBirthDate(context),
+                      child: AbsorbPointer(
+                        child: TextField(
+                          controller: _birthDateController,
+                          decoration: const InputDecoration(
+                            labelText: 'Data de Nascimento',
+                            suffixIcon: Icon(Icons.calendar_today),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  // Mapa do Google abaixo do campo de data
-                  SizedBox(
-                    height: 300,
-                    child: GoogleMap(
-                      initialCameraPosition: CameraPosition(
-                        target: _selectedLocation ??
-                            const LatLng(-8.0476, -34.8770), // Recife, PE
-                        zoom: 12,
+                  const SizedBox(height: 40),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: SizedBox(
+                      height: 300,
+                      child: GoogleMap(
+                        initialCameraPosition: CameraPosition(
+                          target: _selectedLocation ??
+                              const LatLng(-8.0476, -34.8770),
+                          zoom: 12,
+                        ),
+                        onTap: (LatLng location) {
+                          setState(() {
+                            _selectedLocation = location;
+                          });
+                        },
+                        markers: _selectedLocation != null
+                            ? {
+                                Marker(
+                                  markerId: const MarkerId("selected_location"),
+                                  position: _selectedLocation!,
+                                ),
+                              }
+                            : {},
                       ),
-                      onTap: (LatLng location) {
-                        setState(() {
-                          _selectedLocation = location;
-                        });
-                      },
-                      markers: _selectedLocation != null
-                          ? {
-                              Marker(
-                                markerId: const MarkerId("selected_location"),
-                                position: _selectedLocation!,
-                              ),
-                            }
-                          : {},
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 100),
                 ],
               ),
             ),
@@ -204,14 +224,10 @@ class _UserEditState extends State<UserEdit> {
                     backgroundColor: const Color.fromARGB(255, 50, 201, 199),
                     foregroundColor: Colors.white,
                     shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero,
-                    ),
+                        borderRadius: BorderRadius.zero),
                   ),
                   onPressed: _save,
-                  child: const Text(
-                    'Salvar',
-                    style: TextStyle(fontSize: 18),
-                  ),
+                  child: const Text('Salvar', style: TextStyle(fontSize: 18)),
                 ),
               ),
             ),
