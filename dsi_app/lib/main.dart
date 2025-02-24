@@ -11,6 +11,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:dsi_app/src/view/chat_detail.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,6 +31,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'LLM-Prototipe',
       theme: ThemeData(
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Color.fromARGB(255, 50, 201, 199),
+          selectionColor: Color.fromARGB(255, 50, 201, 199),
+          selectionHandleColor: Color.fromARGB(255, 50, 201, 199),
+        ),
         appBarTheme: AppBarTheme(
             elevation: 0, backgroundColor: AppColors.backgroundColor),
         inputDecorationTheme: const InputDecorationTheme(
@@ -48,6 +54,14 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
+      supportedLocales: const [
+        Locale('pt', 'BR'), // Português do Brasil
+      ],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       initialRoute: LoginPage.routeName,
       routes: {
         LoginPage.routeName: (context) => const LoginPage(),
