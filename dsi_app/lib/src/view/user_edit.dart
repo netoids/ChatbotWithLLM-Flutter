@@ -38,7 +38,9 @@ class _UserEditState extends State<UserEdit> {
     super.initState();
     _nameController = TextEditingController(text: widget.userName);
     _birthDateController = TextEditingController(text: widget.birthDate);
-    _selectedAssetImage = widget.userImage;
+    // Definindo a primeira imagem como a imagem selecionada inicialmente
+    _selectedAssetImage =
+        _predefinedImages.isNotEmpty ? _predefinedImages[0] : null;
   }
 
   @override
