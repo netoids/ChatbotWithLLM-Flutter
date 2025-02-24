@@ -132,7 +132,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 30),
             child: Text(
-              "Localização da residencia principal",
+              "Local seguro",
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
             ),
           ),

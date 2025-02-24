@@ -252,7 +252,7 @@ class _UserResponsibleState extends State<UserResponsible> {
                   );
                 },
                 child: const Text(
-                  'Visualização por mapa',
+                  'Visualizar locais seguros',
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
                 ),
                 style: ElevatedButton.styleFrom(
