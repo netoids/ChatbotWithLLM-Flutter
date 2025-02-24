@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class UserEdit extends StatefulWidget {
   final String userName;
@@ -25,6 +26,8 @@ class _UserEditState extends State<UserEdit> {
   late TextEditingController _birthDateController;
   File? _selectedFileImage;
   String? _selectedAssetImage;
+  LatLng?
+      _selectedLocation; // Variável para armazenar a localização selecionada
 
   final List<String> _predefinedImages = [
     'lib/src/assets/images/image1.jpeg',
@@ -152,6 +155,30 @@ class _UserEditState extends State<UserEdit> {
                           suffixIcon: Icon(Icons.calendar_today),
                         ),
                       ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  // Mapa do Google abaixo do campo de data
+                  SizedBox(
+                    height: 300,
+                    child: GoogleMap(
+                      initialCameraPosition: const CameraPosition(
+                        target: LatLng(-8.0476, -34.8770), // Recife, PE
+                        zoom: 12,
+                      ),
+                      onTap: (LatLng location) {
+                        setState(() {
+                          _selectedLocation = location;
+                        });
+                      },
+                      markers: _selectedLocation != null
+                          ? {
+                              Marker(
+                                markerId: const MarkerId("selected_location"),
+                                position: _selectedLocation!,
+                              ),
+                            }
+                          : {},
                     ),
                   ),
                   const SizedBox(height: 20),
