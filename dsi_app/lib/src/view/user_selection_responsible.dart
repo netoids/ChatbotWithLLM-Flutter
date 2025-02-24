@@ -40,8 +40,14 @@ class _UserResponsibleState extends State<UserResponsible> {
           'id': doc.id, // ID do documento
           'name': doc['name'], // Nome do usuário
           'birthDate': doc['birthDate'], // Data de nascimento
+          'location': {
+            'latitude': doc['location']['latitude'], // Latitude
+            'longitude': doc['location']['longitude'], // Longitude
+          },
         };
       }).toList();
+
+      // Aqui você pode fazer algo com fetchedUsers, como armazenar em uma variável de estado
 
       setState(() {
         users = fetchedUsers; // Atualiza a lista local
@@ -166,7 +172,11 @@ class _UserResponsibleState extends State<UserResponsible> {
                                   builder: (context) => UserEdit(
                                     userName: users[index]['name'],
                                     birthDate: formattedBirthDate,
-                                    onUpdate: (newName, newBirthDate) async {
+                                    userImage: users[index]['image'] ??
+                                        '', // Adicione esta linha
+
+                                    onUpdate: (newName, newBirthDate,
+                                        newUserImage) async {
                                       try {
                                         final userId = users[index]['id'];
                                         await FirebaseFirestore.instance
@@ -177,6 +187,8 @@ class _UserResponsibleState extends State<UserResponsible> {
                                             .update({
                                           'name': newName,
                                           'birthDate': newBirthDate,
+                                          'image':
+                                              newUserImage, // Adicione esta linha
                                         });
 
                                         setState(() {

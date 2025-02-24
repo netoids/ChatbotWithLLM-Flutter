@@ -1,18 +1,20 @@
-// ignore_for_file: library_private_types_in_public_api
-
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart'; // Importando o pacote intl para formatação de datas
+import 'package:intl/intl.dart';
 
 class UserEdit extends StatefulWidget {
   final String userName;
-  final String birthDate; // Adicionando parâmetro para a data de nascimento
-  final Function(String, String) onUpdate;
+  final String birthDate;
+  final String userImage; // Adicionando parâmetro para a imagem do usuário
+  final Function(String, String, String) onUpdate;
 
-  const UserEdit(
-      {super.key,
-      required this.userName,
-      required this.birthDate,
-      required this.onUpdate});
+  const UserEdit({
+    super.key,
+    required this.userName,
+    required this.birthDate,
+    required this.userImage,
+    required this.onUpdate,
+  });
 
   @override
   _UserEditState createState() => _UserEditState();
@@ -21,12 +23,22 @@ class UserEdit extends StatefulWidget {
 class _UserEditState extends State<UserEdit> {
   late TextEditingController _nameController;
   late TextEditingController _birthDateController;
+  File? _selectedFileImage;
+  String? _selectedAssetImage;
+
+  final List<String> _predefinedImages = [
+    'lib/src/assets/images/image1.jpeg',
+    'lib/src/assets/images/image2.jpeg',
+    'lib/src/assets/images/image3.jpeg',
+    'lib/src/assets/images/image4.jpeg',
+  ];
 
   @override
   void initState() {
     super.initState();
     _nameController = TextEditingController(text: widget.userName);
     _birthDateController = TextEditingController(text: widget.birthDate);
+    _selectedAssetImage = widget.userImage;
   }
 
   @override
@@ -36,31 +48,12 @@ class _UserEditState extends State<UserEdit> {
     super.dispose();
   }
 
-  // Função para mostrar o DatePicker
   Future<void> _selectBirthDate(BuildContext context) async {
     final DateTime? selectedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
-      builder: (context, child) {
-        return Theme(
-          data: ThemeData.light().copyWith(
-            // Alterando para o ThemeData.light()
-            colorScheme: const ColorScheme.light(
-              primary:
-                  Color.fromARGB(255, 0, 163, 160), // Cor do título e ícones
-              secondary:
-                  Color.fromARGB(255, 0, 163, 160), // Cor do ícone e botão
-            ),
-            buttonTheme:
-                const ButtonThemeData(textTheme: ButtonTextTheme.primary),
-            // Mudando a cor de fundo para branco e ajustando o texto para preto
-            dialogBackgroundColor: Colors.white,
-          ),
-          child: child!,
-        );
-      },
     );
 
     if (selectedDate != null) {
@@ -72,7 +65,17 @@ class _UserEditState extends State<UserEdit> {
   }
 
   void _save() {
-    widget.onUpdate(_nameController.text, _birthDateController.text);
+    String imagePath =
+        _selectedFileImage?.path ?? _selectedAssetImage ?? widget.userImage;
+
+    // Chama o método de atualização passando nome, data e imagem
+    widget.onUpdate(
+      _nameController.text,
+      _birthDateController.text,
+      imagePath, // Certifique-se de que essa variável contém o caminho correto
+    );
+
+    // Fecha a tela de edição
     Navigator.pop(context);
   }
 
@@ -91,48 +94,69 @@ class _UserEditState extends State<UserEdit> {
       ),
       body: Stack(
         children: [
-          // Centralizando os campos de texto no centro da tela
           Positioned.fill(
-            child: Align(
-              alignment: Alignment.center,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 30, right: 30),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // Campo de nome do usuário
-                      TextField(
-                        controller: _nameController,
-                        decoration: const InputDecoration(
-                          labelText: 'Nome do Usuário',
-                        ),
-                      ),
-                      const SizedBox(height: 20), // Espaço entre os campos
-
-                      // Campo de data de nascimento
-                      GestureDetector(
-                        onTap: () => _selectBirthDate(context),
-                        child: AbsorbPointer(
-                          child: TextField(
-                            controller: _birthDateController,
-                            decoration: const InputDecoration(
-                              labelText: 'Data de Nascimento',
-                              suffixIcon: Icon(Icons.calendar_today),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20), // Espaço abaixo dos campos
-                    ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 80),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 40),
+                  const Text(
+                    'Selecione o avatar',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
                   ),
-                ),
+                  const SizedBox(height: 20),
+                  Wrap(
+                    spacing: 10,
+                    alignment: WrapAlignment.center,
+                    children: _predefinedImages.map((image) {
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _selectedAssetImage = image;
+                            _selectedFileImage = null;
+                          });
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            border: _selectedAssetImage == image
+                                ? Border.all(
+                                    color: Color.fromARGB(255, 50, 201, 199),
+                                    width: 3)
+                                : null,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Image.asset(image, width: 60, height: 60),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                  const SizedBox(height: 20),
+                  TextField(
+                    controller: _nameController,
+                    decoration:
+                        const InputDecoration(labelText: 'Nome do Usuário'),
+                  ),
+                  const SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: () => _selectBirthDate(context),
+                    child: AbsorbPointer(
+                      child: TextField(
+                        controller: _birthDateController,
+                        decoration: const InputDecoration(
+                          labelText: 'Data de Nascimento',
+                          suffixIcon: Icon(Icons.calendar_today),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                ],
               ),
             ),
           ),
-
-          // Botão "Salvar" fixo na parte inferior
           Positioned(
             bottom: 20,
             left: 0,
