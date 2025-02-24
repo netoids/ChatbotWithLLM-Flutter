@@ -5,6 +5,7 @@ import 'package:dsi_app/src/view/map.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // Importando o pacote intl para formatação de datas
 import 'user_edit.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class UserResponsible extends StatefulWidget {
   final String userId; // ID do usuário logado
@@ -174,9 +175,17 @@ class _UserResponsibleState extends State<UserResponsible> {
                                     birthDate: formattedBirthDate,
                                     userImage: users[index]['image'] ??
                                         '', // Adicione esta linha
+                                    userLocation:
+                                        users[index]['location'] != null
+                                            ? LatLng(
+                                                users[index]['location']
+                                                    ['latitude'],
+                                                users[index]['location']
+                                                    ['longitude'])
+                                            : null,
 
                                     onUpdate: (newName, newBirthDate,
-                                        newUserImage) async {
+                                        newUserImage, newLocation) async {
                                       try {
                                         final userId = users[index]['id'];
                                         await FirebaseFirestore.instance
@@ -189,6 +198,7 @@ class _UserResponsibleState extends State<UserResponsible> {
                                           'birthDate': newBirthDate,
                                           'image':
                                               newUserImage, // Adicione esta linha
+                                          'location': newLocation,
                                         });
 
                                         setState(() {

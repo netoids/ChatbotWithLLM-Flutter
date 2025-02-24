@@ -6,14 +6,16 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class UserEdit extends StatefulWidget {
   final String userName;
   final String birthDate;
-  final String userImage; // Adicionando parâmetro para a imagem do usuário
-  final Function(String, String, String) onUpdate;
+  final String userImage;
+  final LatLng? userLocation; // Adicionando localização inicial
+  final Function(String, String, String, LatLng?) onUpdate; // Atualização
 
   const UserEdit({
     super.key,
     required this.userName,
     required this.birthDate,
     required this.userImage,
+    required this.userLocation,
     required this.onUpdate,
   });
 
@@ -26,8 +28,7 @@ class _UserEditState extends State<UserEdit> {
   late TextEditingController _birthDateController;
   File? _selectedFileImage;
   String? _selectedAssetImage;
-  LatLng?
-      _selectedLocation; // Variável para armazenar a localização selecionada
+  LatLng? _selectedLocation;
 
   final List<String> _predefinedImages = [
     'lib/src/assets/images/image1.jpeg',
@@ -41,9 +42,10 @@ class _UserEditState extends State<UserEdit> {
     super.initState();
     _nameController = TextEditingController(text: widget.userName);
     _birthDateController = TextEditingController(text: widget.birthDate);
-    // Definindo a primeira imagem como a imagem selecionada inicialmente
     _selectedAssetImage =
         _predefinedImages.isNotEmpty ? _predefinedImages[0] : null;
+    _selectedLocation =
+        widget.userLocation; // Preenchendo com a localização atual
   }
 
   @override
@@ -73,11 +75,12 @@ class _UserEditState extends State<UserEdit> {
     String imagePath =
         _selectedFileImage?.path ?? _selectedAssetImage ?? widget.userImage;
 
-    // Chama o método de atualização passando nome, data e imagem
+    // Chama o método de atualização passando nome, data, imagem e localização
     widget.onUpdate(
       _nameController.text,
       _birthDateController.text,
-      imagePath, // Certifique-se de que essa variável contém o caminho correto
+      imagePath,
+      _selectedLocation, // Passa a localização selecionada
     );
 
     // Fecha a tela de edição
@@ -162,8 +165,9 @@ class _UserEditState extends State<UserEdit> {
                   SizedBox(
                     height: 300,
                     child: GoogleMap(
-                      initialCameraPosition: const CameraPosition(
-                        target: LatLng(-8.0476, -34.8770), // Recife, PE
+                      initialCameraPosition: CameraPosition(
+                        target: _selectedLocation ??
+                            const LatLng(-8.0476, -34.8770), // Recife, PE
                         zoom: 12,
                       ),
                       onTap: (LatLng location) {
