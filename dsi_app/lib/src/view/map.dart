@@ -77,7 +77,12 @@ class _MapPageState extends State<MapPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mapa'),
+        centerTitle: true,
+        title: const Text(
+          'Mapa',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Color.fromARGB(255, 0, 163, 160),
       ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
