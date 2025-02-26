@@ -126,10 +126,6 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
                       return name.contains(searchQuery);
                     }).toList() ??
                     [];
-
-                // Adicione esta linha para verificar a lista de usuários
-                print('Usuários: $users');
-
                 return Column(
                   children: [
                     Expanded(
