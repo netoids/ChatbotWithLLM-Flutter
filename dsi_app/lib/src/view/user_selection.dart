@@ -126,6 +126,7 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
                       return name.contains(searchQuery);
                     }).toList() ??
                     [];
+
                 return Column(
                   children: [
                     Expanded(
