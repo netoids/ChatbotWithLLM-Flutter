@@ -5,6 +5,7 @@ import 'package:dsi_app/src/view/map.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // Importando o pacote intl para formatação de datas
 import 'user_edit.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class UserResponsible extends StatefulWidget {
   final String userId; // ID do usuário logado
@@ -40,8 +41,14 @@ class _UserResponsibleState extends State<UserResponsible> {
           'id': doc.id, // ID do documento
           'name': doc['name'], // Nome do usuário
           'birthDate': doc['birthDate'], // Data de nascimento
+          'location': {
+            'latitude': doc['location']['latitude'], // Latitude
+            'longitude': doc['location']['longitude'], // Longitude
+          },
         };
       }).toList();
+
+      // Aqui você pode fazer algo com fetchedUsers, como armazenar em uma variável de estado
 
       setState(() {
         users = fetchedUsers; // Atualiza a lista local
@@ -166,7 +173,19 @@ class _UserResponsibleState extends State<UserResponsible> {
                                   builder: (context) => UserEdit(
                                     userName: users[index]['name'],
                                     birthDate: formattedBirthDate,
-                                    onUpdate: (newName, newBirthDate) async {
+                                    userImage: users[index]['image'] ??
+                                        '', // Adicione esta linha
+                                    userLocation:
+                                        users[index]['location'] != null
+                                            ? LatLng(
+                                                users[index]['location']
+                                                    ['latitude'],
+                                                users[index]['location']
+                                                    ['longitude'])
+                                            : null,
+
+                                    onUpdate: (newName, newBirthDate,
+                                        newUserImage, newLocation) async {
                                       try {
                                         final userId = users[index]['id'];
                                         await FirebaseFirestore.instance
@@ -177,12 +196,23 @@ class _UserResponsibleState extends State<UserResponsible> {
                                             .update({
                                           'name': newName,
                                           'birthDate': newBirthDate,
+                                          'image':
+                                              newUserImage, // Adicione esta linha
+                                          'location': {
+                                            'latitude': newLocation!.latitude,
+                                            'longitude': newLocation.longitude,
+                                          },
                                         });
 
                                         setState(() {
                                           users[index]['name'] = newName;
                                           users[index]['birthDate'] =
                                               newBirthDate;
+                                          users[index]['location']['latitude'] =
+                                              newLocation.latitude;
+                                          users[index]['location']
+                                                  ['longitude'] =
+                                              newLocation.longitude;
                                         });
 
                                         ScaffoldMessenger.of(context)
@@ -252,7 +282,7 @@ class _UserResponsibleState extends State<UserResponsible> {
                   );
                 },
                 child: const Text(
-                  'Visualização por mapa',
+                  'Visualizar locais seguros',
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
                 ),
                 style: ElevatedButton.styleFrom(

@@ -164,7 +164,7 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
                                               BorderRadius.circular(8.0),
                                           image: DecorationImage(
                                             image: users[index]['image'] != null
-                                                ? NetworkImage(users[index][
+                                                ? AssetImage(users[index][
                                                     'image']) // Use 'image' aqui
                                                 : const AssetImage(
                                                     'lib/src/assets/images/image1.jpeg'),
