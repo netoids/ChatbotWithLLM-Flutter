@@ -27,6 +27,19 @@ class _ChatHistoryState extends State<ChatHistory> {
       initialDateRange: _selectedDateRange ?? initialDateRange,
       firstDate: DateTime(2020),
       lastDate: DateTime.now(),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: Color.fromARGB(255, 0, 163, 160), // Cor primária
+              onPrimary: Colors.white, // Cor do texto no botão primário
+              surface: Colors.white, // Cor de fundo do DatePicker
+              onSurface: Colors.black, // Cor do texto no DatePicker
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
     if (picked != null) {
       setState(() {
@@ -52,7 +65,8 @@ class _ChatHistoryState extends State<ChatHistory> {
 
     // Recupera o nome do perfil passado como argumento
     final arguments = ModalRoute.of(context)?.settings.arguments;
-    final String profileName = arguments is String ? arguments : 'defaultProfile';
+    final String profileName =
+        arguments is String ? arguments : 'defaultProfile';
 
     // Query base para as conversas
     Query conversationsQuery = FirebaseFirestore.instance
@@ -64,25 +78,26 @@ class _ChatHistoryState extends State<ChatHistory> {
 
     // Se houver filtro, ajusta o query para incluir o intervalo de datas
     if (_selectedDateRange != null) {
-  // Define o final do dia para o dia selecionado (23:59:59)
-  final startDate = _selectedDateRange!.start;
-  final endDate = DateTime(
-    _selectedDateRange!.end.year,
-    _selectedDateRange!.end.month,
-    _selectedDateRange!.end.day,
-    23,
-    59,
-    59,
-  );
+      // Define o final do dia para o dia selecionado (23:59:59)
+      final startDate = _selectedDateRange!.start;
+      final endDate = DateTime(
+        _selectedDateRange!.end.year,
+        _selectedDateRange!.end.month,
+        _selectedDateRange!.end.day,
+        23,
+        59,
+        59,
+      );
 
-  conversationsQuery = conversationsQuery
-      .where('startDate', isGreaterThanOrEqualTo: Timestamp.fromDate(startDate))
-      .where('startDate', isLessThanOrEqualTo: Timestamp.fromDate(endDate));
-}
-
+      conversationsQuery = conversationsQuery
+          .where('startDate',
+              isGreaterThanOrEqualTo: Timestamp.fromDate(startDate))
+          .where('startDate', isLessThanOrEqualTo: Timestamp.fromDate(endDate));
+    }
 
     // Ordena as conversas por data (mais recentes primeiro)
-    conversationsQuery = conversationsQuery.orderBy('startDate', descending: true);
+    conversationsQuery =
+        conversationsQuery.orderBy('startDate', descending: true);
 
     return Scaffold(
       appBar: AppBar(
@@ -126,7 +141,8 @@ class _ChatHistoryState extends State<ChatHistory> {
                 }
                 final docs = snapshot.data?.docs ?? [];
                 if (docs.isEmpty) {
-                  return const Center(child: Text('Nenhuma conversa para exibir.'));
+                  return const Center(
+                      child: Text('Nenhuma conversa para exibir.'));
                 }
                 return ListView.builder(
                   itemCount: docs.length,
@@ -134,8 +150,8 @@ class _ChatHistoryState extends State<ChatHistory> {
                     final doc = docs[index];
                     final data = doc.data() as Map<String, dynamic>;
                     final conversation = Conversation.fromMap(data);
-                    final formattedDate =
-                        DateFormat('dd/MM/yyyy HH:mm').format(conversation.startDate);
+                    final formattedDate = DateFormat('dd/MM/yyyy HH:mm')
+                        .format(conversation.startDate);
                     return Dismissible(
                       key: Key(doc.id),
                       direction: DismissDirection.endToStart,
@@ -160,7 +176,8 @@ class _ChatHistoryState extends State<ChatHistory> {
                           );
                         } catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Erro ao deletar conversa: $e')),
+                            SnackBar(
+                                content: Text('Erro ao deletar conversa: $e')),
                           );
                         }
                       },

@@ -128,7 +128,6 @@ class _UserSelectionScreenState extends State<UserSelectionScreen> {
                     [];
 
                 // Adicione esta linha para verificar a lista de usuários
-                print('Usuários: $users');
 
                 return Column(
                   children: [
