@@ -30,9 +30,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   mask_text_input_formatter: ^2.4.0
   image_picker: ^0.8.7+4
   google_maps_flutter: ^2.10.0 # Use a versão mais recente disponível
+
+  
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -41,10 +45,11 @@ dependencies:
   cupertino_icons: ^1.0.8
   firebase_core: ^3.8.1
   firebase_auth: ^5.0.0
+  firebase_storage: ^12.4.3
   dio: ^5.4.3+1
   flutter_markdown: ^0.7.2+1
   google_generative_ai:  
-  intl: ^0.18.0
+  intl: ^0.19.0
   flutter_dotenv: ^5.1.0
 
 
@@ -78,6 +83,7 @@ flutter:
     - lib\src\assets\images\image2.jpeg
     - lib\src\assets\images\image3.jpeg
     - lib\src\assets\images\image4.jpeg
+
  
 
 

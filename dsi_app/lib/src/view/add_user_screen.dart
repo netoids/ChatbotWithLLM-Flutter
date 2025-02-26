@@ -48,6 +48,25 @@ class _AddUserScreenState extends State<AddUserScreen> {
           child: child!,
         );
       },
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData(
+            colorScheme: ColorScheme.light(
+              primary: Color(0xFF00A3A0), // Cor principal (mesma do AppBar)
+              onPrimary: Colors.white, // Cor do texto nos botões
+              surface: Colors.white, // Fundo do calendário
+              onSurface: Colors.black, // Cor do texto
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor:
+                    Color(0xFF00A3A0), // Cor dos botões "CANCELAR" e "OK"
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
 
     if (pickedDate != null) {
@@ -61,6 +80,8 @@ class _AddUserScreenState extends State<AddUserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset:
+          true, // Altere para true para permitir o redimensionamento
       resizeToAvoidBottomInset:
           true, // Altere para true para permitir o redimensionamento
       backgroundColor: const Color(0xFFF3F4F6),
