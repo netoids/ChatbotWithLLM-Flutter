@@ -22,6 +22,6 @@ Para rodar este projeto, você precisa de uma chave de API do firebase.
 
 ## 📸 Capturas de Tela
 
-| Tela Inicial | Tela de Cadastro | Tela Principal |
-|--------------|------------------|----------------|
-| ![Tela Inicial](screenshots/tela_inicial.png) | ![Tela Cadastro](screenshots/tela_cadastro.png) | ![Tela Principal](screenshots/tela_principal.png) |
+| Tela de Entrada | Tela de Principal | Tela de Cadastro | Tela do ChatBot | Tela de Gerenciamento |
+|--------------|------------------|----------------|------------------|----------------|
+| ![Tela Entrada](screenshots\entrar.jpg) | ![Tela Principal](screenshots\tela_principal.jpg) | ![Tela Cadastro](screenshots\cadastro.jpg) | ![Tela ChatBot](screenshots\chatbot.jpg) | ![Tela Gerenciamento](screenshots\gerenciar.jpg) |
