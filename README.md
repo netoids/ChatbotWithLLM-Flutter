@@ -12,9 +12,13 @@ Uma aplicação desenvolvida com Flutter que integra as API's do gemini para uso
 - [Maps API](https://developers.google.com/maps/)
 - Outros pacotes (veja `pubspec.yaml`)
 
-## 📋 Detalhes do projeto
+## 🔐 Configuração de Chave API
 
-~~
+Para rodar este projeto, você precisa de uma chave de API do firebase.
+
+1. Crie um arquivo `.env` na raiz do projeto.
+2. Cole o seguinte conteúdo no arquivo: API_KEY = "Sua_Chave_API_Aqui".
+3. Rode o projeto
 
 ## 📸 Capturas de Tela
 
