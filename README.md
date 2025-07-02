@@ -1,6 +1,7 @@
-# 📱 Nome do Projeto
+# 📱 Lumi
 
-Uma aplicação desenvolvida com Flutter que [breve descrição da funcionalidade principal, ex: "permite aos usuários gerenciar tarefas de forma intuitiva"].
+Uma aplicação desenvolvida com Flutter que integra as API's do gemini para uso de chatbot e maps para um sitema de localização com o intuito de estudar as tecnologias e suas implementações.
+
 
 ## 🚀 Tecnologias Utilizadas
 
@@ -11,13 +12,16 @@ Uma aplicação desenvolvida com Flutter que [breve descrição da funcionalidad
 - [Maps API](https://developers.google.com/maps/)
 - Outros pacotes (veja `pubspec.yaml`)
 
-## 📋 Detalhes do projeto
+## 🔐 Configuração de Chave API
 
-Aplicação com sistema de cadastro com integração com as API's do gemini para uso de chatbot e maps para um sitema de localização com o intuito de estudar as tecnologias e suas implementações.
+Para rodar este projeto, você precisa de uma chave de API do firebase.
 
+1. Crie um arquivo `.env` na raiz do projeto.
+2. Cole o seguinte conteúdo no arquivo: API_KEY = "Sua_Chave_API_Aqui".
+3. Rode o projeto
 
 ## 📸 Capturas de Tela
 
-| Tela Inicial | Tela de Cadastro | Tela Principal |
-|--------------|------------------|----------------|
-| ![Tela Inicial](screenshots/tela_inicial.png) | ![Tela Cadastro](screenshots/tela_cadastro.png) | ![Tela Principal](screenshots/tela_principal.png) |
+| Tela de Entrada | Tela de Principal | Tela de Cadastro | Tela do ChatBot | Tela de Gerenciamento |
+|--------------|------------------|----------------|------------------|----------------|
+| ![Tela Entrada](screenshots/entrar.jpg) | ![Tela Principal](screenshots/tela_principal.jpg) | ![Tela Cadastro](screenshots/cadastro.jpg) | ![Tela ChatBot](screenshots/chatbot.jpg) | ![Tela Gerenciamento](screenshots/gerenciar.jpg) |
