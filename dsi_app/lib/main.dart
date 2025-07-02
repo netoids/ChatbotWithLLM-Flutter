@@ -15,9 +15,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
@@ -37,7 +35,9 @@ class MyApp extends StatelessWidget {
           selectionHandleColor: Color.fromARGB(255, 50, 201, 199),
         ),
         appBarTheme: AppBarTheme(
-            elevation: 0, backgroundColor: AppColors.backgroundColor),
+          elevation: 0,
+          backgroundColor: AppColors.backgroundColor,
+        ),
         inputDecorationTheme: const InputDecorationTheme(
           border: OutlineInputBorder(
             borderSide: BorderSide(color: Color(0xFF00A3A0)),

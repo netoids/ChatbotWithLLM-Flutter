@@ -7,22 +7,22 @@ plugins {
 
 android {
     namespace = "com.example.dsi_app"
-    compileSdkVersion 34  // Atualizado para evitar conflitos com Firebase
+    compileSdkVersion 34
     ndkVersion "25.1.8937393"
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 
     defaultConfig {
         applicationId "com.lumi.app"
-        minSdkVersion 23    // Alterado de 21 para 23 para compatibilidade com Firebase
-        targetSdkVersion 34 // Atualizado para compatibilidade com plugins Firebase
+        minSdkVersion 23
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
