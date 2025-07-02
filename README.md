@@ -1,6 +1,7 @@
-# 📱 Nome do Projeto
+# 📱 Lumi
 
-Uma aplicação desenvolvida com Flutter que [breve descrição da funcionalidade principal, ex: "permite aos usuários gerenciar tarefas de forma intuitiva"].
+Uma aplicação desenvolvida com Flutter que integra as API's do gemini para uso de chatbot e maps para um sitema de localização com o intuito de estudar as tecnologias e suas implementações.
+
 
 ## 🚀 Tecnologias Utilizadas
 
@@ -13,8 +14,7 @@ Uma aplicação desenvolvida com Flutter que [breve descrição da funcionalidad
 
 ## 📋 Detalhes do projeto
 
-Aplicação com sistema de cadastro com integração com as API's do gemini para uso de chatbot e maps para um sitema de localização com o intuito de estudar as tecnologias e suas implementações.
-
+~~
 
 ## 📸 Capturas de Tela
 
