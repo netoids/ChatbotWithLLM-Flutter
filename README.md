@@ -1,6 +1,6 @@
 # 📱 Lumi
 
-Uma aplicação desenvolvida com Flutter que integra as API's do gemini para uso de chatbot e maps para um sitema de localização com o intuito de estudar as tecnologias e suas implementações.
+Uma aplicação desenvolvida com Flutter que integra as API's do gemini para uso de chatbot e maps para um sitema de localização com o intuito de estudar as API's e suas implementações.
 
 
 ## 🚀 Tecnologias Utilizadas
