@@ -7,13 +7,13 @@ Uma aplicação desenvolvida com Flutter que [breve descrição da funcionalidad
 - [Flutter](https://flutter.dev/)
 - [Dart](https://dart.dev/)
 - [Firebase](https://firebase.google.com/)
-- [Gemini IA]([https://gemini.google.com/](https://ai.google.dev/gemini-api))
+- [Gemini IA](https://ai.google.dev/gemini-api)
 - [Maps API](https://developers.google.com/maps/)
 - Outros pacotes (veja `pubspec.yaml`)
 
-## 📋 Objetivos do Projeto
+## 📋 Detalhes do projeto
 
-Criar uma aplicação 
+Aplicação com sistema de cadastro com integração com as API's do gemini para uso de chatbot e maps para um sitema de localização com o intuito de estudar as tecnologias e suas implementações.
 
 
 ## 📸 Capturas de Tela
