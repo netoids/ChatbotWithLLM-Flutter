@@ -6,8 +6,15 @@ Uma aplicação desenvolvida com Flutter que [breve descrição da funcionalidad
 
 - [Flutter](https://flutter.dev/)
 - [Dart](https://dart.dev/)
-- [Firebase](https://firebase.google.com/) (se aplicável)
+- [Firebase](https://firebase.google.com/)
+- [Gemini IA]([https://gemini.google.com/](https://ai.google.dev/gemini-api))
+- [Maps API](https://developers.google.com/maps/)
 - Outros pacotes (veja `pubspec.yaml`)
+
+## 📋 Objetivos do Projeto
+
+Criar uma aplicação 
+
 
 ## 📸 Capturas de Tela
 
